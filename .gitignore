@@ -1,0 +1,100 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.whl
+
+# Django
+*.log
+# db.sqlite3  # Uncomment this line if you want to include the SQLite database file
+*.pot
+*.pyc
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# Static files
+/static/
+media/
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Environment variables
+.env
+*.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Local settings
+local_settings.py
+
+# Ignore all backups
+*~
+*.bak
+*.tmp
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# React Project
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output
+build/
+dist/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# React specific
+package-lock.json
+yarn.lock
+
+# Other files
+*.log
+*.tsbuildinfo
+*.tgz
+
+# Logs
+*.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Other files you may want to ignore
+*.pot
+*.egg-info/
+

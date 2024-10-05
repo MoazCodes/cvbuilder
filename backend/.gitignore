@@ -1,0 +1,68 @@
+venv/
+db.sqlite3
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+# Virtual environment
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.whl
+
+# Django
+*.log
+*.sqlite3
+db.sqlite3
+*.pot
+*.pyc
+*.pyo
+
+# Static files
+/static/
+media/
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.bak
+*.tmp
+
+# Environment variables
+.env
+*.env
+.env.local
+
+# Local settings
+local_settings.py
+
+# Ignore all backups
+*~ 
+*.bak
