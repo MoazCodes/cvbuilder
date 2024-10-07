@@ -121,3 +121,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 JWT_EXPIRATION_TIME=24*7
+
+
+ALLOWED_HOSTS = ['*']  # Allow all for development
