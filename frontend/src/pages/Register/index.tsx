@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Joi from 'joi';
+import Joi, { func } from 'joi';
 import axios from 'axios';
 
 
@@ -48,6 +48,14 @@ export default function Register() {
     return schema.validate(user, { abortEarly: false });
   }
 
+  function clearInputs(){
+    let inputs:any=document.querySelectorAll('input');
+    
+    for(let i of inputs){
+      i.value='';
+    }
+  }
+
   function submit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); 
     const { error } = validation(); 
@@ -56,16 +64,23 @@ export default function Register() {
       console.log(error.details); 
       return;
     } 
-    // console.log("Form submitted successfully!", user);
 
     axios
-        .post("http://localhost:8000/signup", user)
+        .post("http://localhost:8000/signup/", user)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
+          let token:string;
+          token=res?.data?.token;
+          localStorage.setItem("token",token);
+          clearInputs();
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
+          let errMessage:string=err.response.data.error;
+          // console.log(errMessage);
+
         });
+
     
   }
   return (

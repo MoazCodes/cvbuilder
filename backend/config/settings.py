@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'rest_framework',  # Add REST framework
     'rest_framework.authtoken',  # Token authentication
     'rest_framework_simplejwt',  # JWT authentication
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -124,3 +126,7 @@ JWT_EXPIRATION_TIME=24*7
 
 
 ALLOWED_HOSTS = ['*']  # Allow all for development
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+
