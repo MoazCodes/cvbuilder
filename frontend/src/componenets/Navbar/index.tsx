@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
 const Navbar = () => {
     return (
         <>
@@ -43,9 +44,9 @@ const Navbar = () => {
                             <a className="nav-link mx-2" href="#">
                                 Login
                             </a>
-                            <a className="nav-link mx-2" href="#">
+                            <Link className="nav-link mx-2" to={"/register"}>
                                 Register
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

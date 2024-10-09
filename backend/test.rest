@@ -2,15 +2,12 @@
 POST http://127.0.0.1:8000/login/
 Content-Type: application/json
 
-{"email":"mfafa@gmail.com","password":"123"}
+{"email":"ahmed5@gmail.com","password":"123"}
 
 ###
 POST http://127.0.0.1:8000/signup/
 Content-Type: application/json
 
-{"first_name":"zz","last_name":"zzz","password":"123","email":"mfafa@gmail.com"}
+{"first_name":"ahmed","last_name":"mohamed","password":"123","email":"ahmed2@gmail.com"}
 ###
-POST http://127.0.0.1:8000/signup/
-Content-Type: application/json
 
-{"username":"fa","password":"123","email":"afsa@gmail.com"}
