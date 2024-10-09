@@ -1,0 +1,15 @@
+.deleteBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.layout {
+    position: absolute;
+    background: #000000cf;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Pick a template",
+        "content": "Choose a template and customize it to your own identity.",
+        "svg": "faCopy"
+    },
+    {
+        "title": "Fill in the blanks",
+        "content": "Start by filling in the relevant information for your CV.",
+        "svg": "faPen"
+    },
+    {
+        "title": "Final review",
+        "content": "Review the content to ensure accuracy and clarity of your CV.",
+        "svg": "faCheck"
+    },
+    {
+        "title": "Download your CV",
+        "content": "Easily download your CV and edit afterwards as a pdf.",
+        "svg": "faFileArrowDown"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Easy online resume builder",
+        "content": "Create an awesome resume in minutes, without leaving your web browser.",
+        "svg": "faCloud"
+    },
+    {
+        "title": "Your data is safe",
+        "content": "Your data is kept private and protected by strong 256-bit encryption.",
+        "svg": "faShieldHalved"
+    },
+    {
+        "title": "Approved templates",
+        "content": "Professionally-designed resume templates and examples. Just edit and download in 5 minutes.",
+        "svg": "faThumbsUp"
+    },
+    {
+        "title": "Optimized resumes",
+        "content": "Formats and designs are optimized for resume-filtering algorithms.",
+        "svg": "faFile"
+    }
+]
