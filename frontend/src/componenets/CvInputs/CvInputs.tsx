@@ -16,8 +16,8 @@ const CvInputs = () => {
         objective: "",
         degree: "",
         school: "",
-        startDate: "",
-        endDate: "",
+        startSchoolDate: "",
+        endSchoolDate: "",
         skills: [] as string[],
     });
 
@@ -283,7 +283,7 @@ const CvInputs = () => {
                                         <div className="col-md-3">
                                             <div className="mb-3">
                                                 <label
-                                                    htmlFor="startDate"
+                                                    htmlFor="startSchoolDate"
                                                     className="form-label"
                                                 >
                                                     School/University
@@ -291,9 +291,9 @@ const CvInputs = () => {
                                                 <input
                                                     type="date"
                                                     className="form-control"
-                                                    id="startDate"
+                                                    id="startSchoolDate"
                                                     placeholder="September"
-                                                    name="startDate"
+                                                    name="startSchoolDate"
                                                     onChange={handleInput}
                                                 />
                                             </div>
@@ -302,7 +302,7 @@ const CvInputs = () => {
                                         <div className="col-md-3">
                                             <div className="mb-3">
                                                 <label
-                                                    htmlFor="endDate"
+                                                    htmlFor="endSchoolDate"
                                                     className="form-label"
                                                 >
                                                     School/University
@@ -310,8 +310,8 @@ const CvInputs = () => {
                                                 <input
                                                     type="date"
                                                     className="form-control"
-                                                    id="endDate"
-                                                    name="endDate"
+                                                    id="endSchoolDate"
+                                                    name="endSchoolDate"
                                                     onChange={handleInput}
                                                 />
                                             </div>
