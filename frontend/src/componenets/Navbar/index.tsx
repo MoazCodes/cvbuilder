@@ -1,10 +1,10 @@
 import React from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
+            <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
                 <div className="container w-80">
                     <a className="navbar-brand fw-bold" href="#">
                         CV Maker
@@ -25,19 +25,19 @@ const Navbar = () => {
                         id="navbarNavAltMarkup"
                     >
                         <div className="navbar-nav ms-auto ">
-                            <a
+                            <NavLink
                                 className="nav-link active"
                                 aria-current="page"
-                                href="#"
+                                to="/"
                             >
                                 Home
-                            </a>
+                            </NavLink>
                             <a className="nav-link mx-2" href="#">
                                 Jobs
                             </a>
-                            <a className="nav-link mx-2" href="#">
+                            <NavLink className="nav-link mx-2" to="/applications#applications">
                                 Applications
-                            </a>
+                            </NavLink>
                             <a className="nav-link mx-2" href="#">
                                 Cv
                             </a>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Step, Stepper } from "react-form-stepper";
 import Skill from "../Skill/Skill";
+import { Outlet } from "react-router-dom";
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
@@ -401,6 +402,7 @@ const CvInputs = () => {
                     </div>
                 </div>
             </div>
+            <Outlet/>
         </>
     );
 };
