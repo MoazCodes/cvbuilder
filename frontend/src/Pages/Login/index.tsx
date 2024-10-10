@@ -2,30 +2,25 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Joi, { func } from 'joi';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 //error message from frontend and backend
 
 
 type User = {
-  first_name: string;
-  last_name: string;
   email: string;
   password: string;
 };
 
-export default function Register() {
+export default function Login() {
   const [user,setUser]=useState<User>({
-    'first_name':"",
-    'last_name':"",
     'email':"",
     'password':"",
   })
 
   const [err,setErr]=useState<string>("");
   const [errs,setErrs]=useState<Array<string>>([]);
-  const nevigate= useNavigate();
   
   
   
@@ -42,8 +37,6 @@ export default function Register() {
 
   function validation(){
     let schema = Joi.object({
-      first_name: Joi.string().alphanum().min(3).max(30).required(),
-      last_name: Joi.string().alphanum().min(3).max(30).required(),
       email: Joi.string().email({
         minDomainSegments: 2,
         tlds: { allow: ["m","eg","com", "net"] },
@@ -68,14 +61,10 @@ export default function Register() {
     const { error } = validation(); 
 
     if (error) {
-      console.log(error.details); 
+      // console.log(error.details); 
       error.details.map((e,i)=>{
         let impErr:string;
-        if (e.message.includes("first_name")) {
-          impErr= "First name must be at least 3 characters long.";
-        } else if (e.message.includes("last_name")) {
-          impErr = "Last name must be at least 3 characters long.";
-        } else if (e.message.includes("password")) {
+        if (e.message.includes("password")) {
           impErr = "Password must be 8-30 characters long and contain only letters and numbers.";
         }
         setErrs((prv)=> [...prv,impErr] )
@@ -84,17 +73,18 @@ export default function Register() {
     } 
 
     axios
-        .post("http://localhost:8000/signup/", user)
+        .post("http://localhost:8000/login/", user)
         .then((res) => {
           // console.log(res);
-          nevigate("/login");
+          let token:string;
+          token=res?.data?.token;
+          localStorage.setItem("token",token);
 
           clearInputs();
         })
         .catch((e) => {
           // console.log(e.response.data.error);
           setErr(e.response.data?.error);
-          // console.log(errMessage);
 
         });
 
@@ -103,7 +93,7 @@ export default function Register() {
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center">
       <form className="col-sm-8 col-md-6 col-lg-4 p-4 border rounded shadow-sm" onSubmit={submit}>
-        <h2 className="text-center mb-4">Register</h2>
+        <h2 className="text-center mb-4">Login</h2>
 
         {(errs.length || err)&&(<p className='h2 text-danger text-center alert alert-danger'>Errors</p>)}
         <ul  className="list-unstyled">
@@ -115,31 +105,9 @@ export default function Register() {
 
         {err&&<p className='h4 alert alert-danger'>{err}</p>}
 
-        <div className="mb-3">
-          <label htmlFor="first_name" className="form-label">First Name:</label>
-          <input
-            type="text"
-            className="form-control bg-light"
-            id="first_name"
-            name="first_name"
-            placeholder="Enter your first name"
-            required 
-            onChange={getdata}
-          />
-        </div>
+        
 
-        <div className="mb-3">
-          <label htmlFor="last_name" className="form-label">Last Name:</label>
-          <input
-            type="text"
-            className="form-control bg-light"
-            id="last_name"
-            name="last_name"
-            placeholder="Enter your last name"
-            required 
-            onChange={getdata}
-          />
-        </div>
+        
 
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
@@ -167,8 +135,14 @@ export default function Register() {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary w-100" >Register</button>
+        <button type="submit" className="btn btn-primary w-100" >Login</button>
+        <div className="text-center mt-3">
+          <p>
+            Don't have an account? <Link to="/register">Create a new account</Link>
+          </p>
+        </div>
       </form>
+      
     </div>
   );
 }

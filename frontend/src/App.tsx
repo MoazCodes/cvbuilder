@@ -12,6 +12,7 @@ import { Route, Routes } from "react-router-dom";
 import CvInputs from "./componenets/CvInputs/CvInputs";
 import Register from "./Pages/Register";
 import Home from "./Pages/Home/Home";
+import Login from "./Pages/Login";
 function App() {
     useEffect(() => {
         new WOW.WOW({
@@ -27,6 +28,7 @@ function App() {
 
                 <Route path="/templates" element={<Templates />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </>
     );
