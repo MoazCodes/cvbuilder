@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import logo from "./logo.svg";
-import Home from "./Pages/Home/Home";
 import Navbar from "./componenets/Navbar";
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -12,6 +11,7 @@ import Templates from "./Pages/Templates/Templates";
 import { Route, Routes } from "react-router-dom";
 import CvInputs from "./componenets/CvInputs/CvInputs";
 import Register from "./Pages/Register";
+import Home from "./Pages/Home/Home";
 function App() {
     useEffect(() => {
         new WOW.WOW({
