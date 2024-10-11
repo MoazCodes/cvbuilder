@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Step, Stepper } from "react-form-stepper";
 import Skill from "../Skill/Skill";
+import "./styles.css";
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
@@ -50,34 +51,49 @@ const CvInputs = () => {
     return (
         <>
             <div className="pt-5 mt-5  container  vh-100">
-                <Stepper activeStep={goSteps}>
+                <Stepper
+                    activeStep={goSteps}
+                    connectorStateColors={true}
+                    connectorStyleConfig={{
+                        completedColor: "var(--main-color)", // Color for completed connectors
+                        disabledColor: "gray", // Color for disabled connectors
+                        activeColor: "var(--main-color)", // Color for the active connector
+                        size: "3px", // Thickness of the connector
+                        style: "margin: 4px; border: 2px solid white;", // Additional styles
+                    }}
+                >
                     <Step
                         style={{
-                            backgroundColor: goSteps >= 0 ? "#2b7cff" : "#aaa",
+                            backgroundColor:
+                                goSteps >= 0 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Personal Details"
                     />
                     <Step
                         style={{
-                            backgroundColor: goSteps >= 1 ? "#2b7cff" : "#aaa",
+                            backgroundColor:
+                                goSteps >= 1 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Objective"
                     />
                     <Step
                         style={{
-                            backgroundColor: goSteps >= 2 ? "#2b7cff" : "#aaa",
+                            backgroundColor:
+                                goSteps >= 2 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Education"
                     />
                     <Step
                         style={{
-                            backgroundColor: goSteps >= 3 ? "#2b7cff" : "#aaa",
+                            backgroundColor:
+                                goSteps >= 3 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Skills"
                     />
                     <Step
                         style={{
-                            backgroundColor: goSteps >= 4 ? "#2b7cff" : "#aaa",
+                            backgroundColor:
+                                goSteps >= 4 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Projects"
                     />
@@ -329,23 +345,8 @@ const CvInputs = () => {
                                 </div>
                             )}
                             {goSteps === 3 && (
-                                <div className="container-fluid">
-                                    <div className="row h-100">
-                                        <div className="col-12 d-flex flex-wrap">
-                                            {formData.skills.map(
-                                                (skill, index) => (
-                                                    <Skill
-                                                        key={index}
-                                                        skill={skill}
-                                                        index={index}
-                                                        deleteSkill={
-                                                            deleteSkill
-                                                        }
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-
+                                <div className="container-fluid  py-3 min-vh-70 ">
+                                    <div className="row h-100 g-4">
                                         <div className="col-md-6">
                                             <input
                                                 type="text"
@@ -364,14 +365,28 @@ const CvInputs = () => {
                                                 Add Skill
                                             </div>
                                         </div>
-                                        <div className="nextBtn mt-5 text-end ">
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => setGoSteps(4)}
-                                            >
-                                                Next
-                                            </button>
+                                        <div className="col-12 d-flex flex-wrap ">
+                                            {formData.skills.map(
+                                                (skill, index) => (
+                                                    <Skill
+                                                        key={index}
+                                                        skill={skill}
+                                                        index={index}
+                                                        deleteSkill={
+                                                            deleteSkill
+                                                        }
+                                                    />
+                                                )
+                                            )}
                                         </div>
+                                    </div>
+                                    <div className="nextBtn mt-5 text-end">
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={() => setGoSteps(4)}
+                                        >
+                                            Next
+                                        </button>
                                     </div>
                                 </div>
                             )}

@@ -12,6 +12,7 @@ import Templates from "./Pages/Templates/Templates";
 import { Route, Routes } from "react-router-dom";
 import CvInputs from "./componenets/CvInputs/CvInputs";
 import Register from "./Pages/Register";
+import Applications from "./Pages/Applications/Applications";
 function App() {
     useEffect(() => {
         new WOW.WOW({
@@ -21,12 +22,14 @@ function App() {
     return (
         <>
             <Navbar />
-            <CvInputs />
-            <Routes>
-                <Route path="/" element={<Home />} />
 
-                <Route path="/templates" element={<Templates />} />
-                <Route path="/register" element={<Register />} />
+            <Routes>
+                <Route path="" element={<Home />} />
+
+                <Route path="templates" element={<Templates />} />
+                <Route path="register" element={<Register />} />
+                <Route path="applications" element={<Applications />} />
+                <Route path="templates/:id" element={<CvInputs />} />
             </Routes>
         </>
     );

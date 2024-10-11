@@ -11,7 +11,8 @@ const Skill = ({ skill, index, deleteSkill }: SkillProps) => {
     return (
         <>
             <div
-                className="skill bg-info px-3 py-2 rounded-1 m-1 position-relative"
+                className="skill px-3 py-2 rounded-1 m-1 position-relative text-break"
+                style={{ background: "var(--main-color)" }}
                 onMouseEnter={() => setIsHovered(1)}
                 onMouseLeave={() => setIsHovered(0)}
             >
