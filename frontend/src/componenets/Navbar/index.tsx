@@ -32,9 +32,9 @@ const Navbar = () => {
                             >
                                 Home
                             </Link>
-                            <a className="nav-link mx-2" href="#">
+                            <Link className="nav-link mx-2" to={"Jobs"}>
                                 Jobs
-                            </a>
+                            </Link>
                             <Link className="nav-link mx-2" to={"applications"}>
                                 Applications
                             </Link>

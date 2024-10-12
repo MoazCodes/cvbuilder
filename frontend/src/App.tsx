@@ -13,6 +13,8 @@ import { Route, Routes } from "react-router-dom";
 import CvInputs from "./componenets/CvInputs/CvInputs";
 import Register from "./pages/Register";
 import Applications from "./pages/Applications/Applications";
+import Jobs from "./pages/Jobs/Jobs"
+
 function App() {
     useEffect(() => {
         new WOW.WOW({
@@ -28,6 +30,7 @@ function App() {
 
                 <Route path="templates" element={<Templates />} />
                 <Route path="register" element={<Register />} />
+                <Route path="jobs" element={<Jobs />} />
                 <Route path="applications" element={<Applications />} />
                 <Route path="templates/:id" element={<CvInputs />} />
             </Routes>
