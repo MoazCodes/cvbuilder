@@ -1,4 +1,5 @@
 :root {
+    --main-color: #8b0065;
     --foreground: hsl(0, 0%, 100%);
     --background: hsl(250, 24%, 9%);
     --secondaryBg: hsl(250, 21%, 11%);
@@ -124,4 +125,26 @@ body {
 
 .w-fitContent {
     width: fit-content;
+}
+
+.min-vh-70 {
+    min-height: 70vh;
+}
+.max-vh-70 {
+    max-height: 70vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fcc7ee45;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--main-color);
 }

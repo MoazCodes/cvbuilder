@@ -6,9 +6,9 @@ const Navbar = () => {
         <>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
                 <div className="container w-80">
-                    <a className="navbar-brand fw-bold" href="#">
+                    <Link className="navbar-brand fw-bold" to={""}>
                         CV Maker
-                    </a>
+                    </Link>
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -25,26 +25,26 @@ const Navbar = () => {
                         id="navbarNavAltMarkup"
                     >
                         <div className="navbar-nav ms-auto ">
-                            <a
+                            <Link
                                 className="nav-link active"
                                 aria-current="page"
-                                href="#"
+                                to={""}
                             >
                                 Home
-                            </a>
-                            <a className="nav-link mx-2" href="#">
+                            </Link>
+                            <Link className="nav-link mx-2" to={"Jobs"}>
                                 Jobs
-                            </a>
-                            <a className="nav-link mx-2" href="#">
+                            </Link>
+                            <Link className="nav-link mx-2" to={"applications"}>
                                 Applications
-                            </a>
-                            <a className="nav-link mx-2" href="#">
+                            </Link>
+                            <Link className="nav-link mx-2" to={"templates"}>
                                 Cv
-                            </a>
+                            </Link>
                             <a className="nav-link mx-2" href="#">
                                 Login
                             </a>
-                            <Link className="nav-link mx-2" to={"/register"}>
+                            <Link className="nav-link mx-2" to={"register"}>
                                 Register
                             </Link>
                         </div>

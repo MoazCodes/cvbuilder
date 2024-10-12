@@ -1,0 +1,8 @@
+.form-control {
+    background: transparent !important;
+    color: white !important;
+}
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.588) !important;
+    font-size: 14px;
+}
