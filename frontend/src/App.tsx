@@ -19,6 +19,7 @@ import Applications from "./Pages/Applications/Applications";
 import Jobs from "./Pages/Jobs/Jobs"
 
 function App() {
+
     useEffect(() => {
         new WOW.WOW({
             live: false,
@@ -32,12 +33,12 @@ function App() {
             <Routes>
                 <Route path="" element={<Home />} />
 
-                <Route path="templates" element={<Templates />} />
-                <Route path="register" element={<Register />} />
-                <Route path="login" element={<Login />} />
-                <Route path="jobs" element={<Jobs />} />
-                <Route path="applications" element={<Applications />} />
-                <Route path="templates/:id" element={<CvInputs />} />
+                <Route path="/templates" element={<Templates />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/jobs" element={<Jobs />} />
+                <Route path="/applications" element={<Applications />} />
+                <Route path="/templates/:id" element={<CvInputs />} />
             </Routes>
         </>
     );

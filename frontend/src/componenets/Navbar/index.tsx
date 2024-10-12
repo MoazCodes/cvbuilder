@@ -2,6 +2,13 @@ import React from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 const Navbar = () => {
+
+    function handleLogout(){
+        localStorage.removeItem("token");
+        // updateUserData();
+        console.log("loged out ");
+
+    }
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -41,12 +48,15 @@ const Navbar = () => {
                             <Link className="nav-link mx-2" to={"templates"}>
                                 Cv
                             </Link>
-                            <a className="nav-link mx-2" href="#">
+                            <Link className="nav-link mx-2" to={"login"}>
                                 Login
-                            </a>
+                            </Link>
                             <Link className="nav-link mx-2" to={"register"}>
                                 Register
                             </Link>
+                            <button className="btn btn-outline-danger" onClick={handleLogout}>
+                                Logout
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -80,6 +80,7 @@ export default function Register() {
         navigate("/login");
       })
       .catch((e) => {
+        console.log(e);
         setErr(e.response.data?.error);
       });
   }
