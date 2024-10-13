@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Joi from "joi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './style.css'
 
 type User = {
     first_name: string;
@@ -117,7 +118,7 @@ export default function Register() {
                     </label>
                     <input
                         type="text"
-                        className="form-control bg-light"
+                        className="form-control bg-light text-dark"
                         id="first_name"
                         name="first_name"
                         placeholder="Enter your first name"
@@ -132,7 +133,7 @@ export default function Register() {
                     </label>
                     <input
                         type="text"
-                        className="form-control bg-light"
+                        className="form-control bg-light text-dark"
                         id="last_name"
                         name="last_name"
                         placeholder="Enter your last name"
@@ -147,7 +148,7 @@ export default function Register() {
                     </label>
                     <input
                         type="email"
-                        className="form-control bg-light"
+                        className="form-control bg-light text-dark"
                         id="email"
                         name="email"
                         placeholder="Enter your email"
@@ -162,7 +163,7 @@ export default function Register() {
                     </label>
                     <input
                         type="password"
-                        className="form-control bg-light"
+                        className="form-control bg-light text-dark"
                         id="password"
                         name="password"
                         placeholder="Enter your password"
