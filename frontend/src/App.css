@@ -148,3 +148,12 @@ body {
 ::-webkit-scrollbar-thumb {
     background: var(--main-color);
 }
+
+.form-control {
+    color: white !important;
+    background: transparent !important;
+}
+
+.form-control::placeholder {
+    color: white !important;
+}

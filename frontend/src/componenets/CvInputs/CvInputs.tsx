@@ -2,11 +2,46 @@ import React, { useEffect, useState } from "react";
 import { Step, Stepper } from "react-form-stepper";
 import Skill from "../Skill/Skill";
 import "./styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import ExtracurricularActivity from "../extracurricularActivities";
+import Cv from "../CV";
+import StepperLevel from "../stepperLevels";
+
+interface project {
+    projectName: string;
+    projectDate: string;
+    projectDetails: string;
+}
+
+interface experience {
+    jobTitle: string;
+    startJobDate: string;
+    endJobDate: string;
+    jobDescription: string;
+    company: string;
+}
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
-    const [skills, setSkills] = useState<string[]>([]);
+    const [activity, setActivity] = useState("");
     const [skill, setSkill] = useState("");
+    const [projectAddition, setProjectAddition] = useState(false);
+    const [workAddition, setWorkAddition] = useState(false);
+    const [project, setProject] = useState({
+        projectName: "",
+        projectDate: "",
+        projectDetails: "",
+    });
+
+    const [experience, setExperience] = useState({
+        jobTitle: "",
+        startJobDate: "",
+        endJobDate: "",
+        jobDescription: "",
+        company: "",
+    });
+
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -17,14 +52,25 @@ const CvInputs = () => {
         objective: "",
         degree: "",
         school: "",
+        schoolDepartment: "",
+        schoolCity: "",
+        schoolCountry: "",
         startSchoolDate: "",
         endSchoolDate: "",
         skills: [] as string[],
+        projects: [] as project[], //project={ projectName: string ,projectDate: string ,projectDetails: string ,}
+        experiences: [] as experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
+        extracurricularActivities: [] as string[],
     });
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
     };
+
+    let handleActivity = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setActivity(e.target.value);
+    };
+
     let handleInput = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -40,10 +86,102 @@ const CvInputs = () => {
         console.log(formData);
     };
 
+    let addActivity = (activity: string) => {
+        if (activity.trim()) {
+            setFormData({
+                ...formData,
+                extracurricularActivities: [
+                    ...formData.extracurricularActivities,
+                    `• ` + activity,
+                ],
+            });
+        }
+        setActivity("");
+        console.log(formData);
+    };
+
     let deleteSkill = (index: number) => {
         setFormData({
             ...formData,
             skills: formData.skills.filter((item, i) => i !== index),
+        });
+    };
+
+    let deleteActvity = (index: number) => {
+        setFormData({
+            ...formData,
+            extracurricularActivities:
+                formData.extracurricularActivities.filter(
+                    (item, i) => i !== index
+                ),
+        });
+    };
+
+    let handleProject = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setProject({
+            ...project,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    let handleJob = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setExperience({ ...experience, [e.target.name]: e.target.value });
+    };
+
+    let addProject = (project: project) => {
+        if (project.projectName.trim() !== "") {
+            setFormData({
+                ...formData,
+                projects: [...formData.projects, project],
+            });
+
+            setProject({
+                projectName: "",
+                projectDate: "",
+                projectDetails: "",
+            });
+        }
+        setProjectAddition(!projectAddition);
+        console.log(formData);
+    };
+
+    let addExperience = (experience: experience) => {
+        if (
+            experience.jobTitle.trim() !== "" &&
+            experience.company.trim() !== ""
+        ) {
+            setFormData({
+                ...formData,
+                experiences: [...formData.experiences, experience],
+            });
+
+            setExperience({
+                jobTitle: "",
+                startJobDate: "",
+                endJobDate: "",
+                jobDescription: "",
+                company: "",
+            });
+        }
+        setWorkAddition(!workAddition);
+        console.log(formData);
+    };
+
+    let deleteProject = (index: number) => {
+        setFormData({
+            ...formData,
+            projects: formData.projects.filter((item, i) => i !== index),
+        });
+    };
+
+    let deleteExperience = (index: number) => {
+        setFormData({
+            ...formData,
+            experiences: formData.experiences.filter((item, i) => i !== index),
         });
     };
 
@@ -96,6 +234,22 @@ const CvInputs = () => {
                                 goSteps >= 4 ? "var(--main-color)" : "#aaa",
                         }}
                         label="Projects"
+                    />
+
+                    <Step
+                        style={{
+                            backgroundColor:
+                                goSteps >= 5 ? "var(--main-color)" : "#aaa",
+                        }}
+                        label="Work experience"
+                    />
+
+                    <Step
+                        style={{
+                            backgroundColor:
+                                goSteps >= 6 ? "var(--main-color)" : "#aaa",
+                        }}
+                        label="Extracurricular Activities"
                     />
                 </Stepper>
                 <div className="container mt-5">
@@ -219,14 +373,10 @@ const CvInputs = () => {
                                         </div>
                                     </div>
 
-                                    <div className="nextBtn mt-5 text-end ">
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => setGoSteps(1)}
-                                        >
-                                            Next
-                                        </button>
-                                    </div>
+                                    <StepperLevel
+                                        currentLevel={goSteps}
+                                        setGoSteps={setGoSteps}
+                                    />
                                 </div>
                             )}
 
@@ -239,44 +389,22 @@ const CvInputs = () => {
                                         Objective
                                     </label>
                                     <textarea
+                                        style={{ minHeight: "150px" }}
                                         className="objective w-100 mt-3 form-control"
                                         id="objective"
                                         name="objective"
                                         onChange={handleInput}
                                     ></textarea>
-                                    <div className="nextBtn mt-5 text-end ">
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => setGoSteps(2)}
-                                        >
-                                            Next
-                                        </button>
-                                    </div>
+                                    <StepperLevel
+                                        currentLevel={goSteps}
+                                        setGoSteps={setGoSteps}
+                                    />
                                 </div>
                             )}
 
                             {goSteps === 2 && (
                                 <div className="container-fluid">
                                     <div className="row h-100">
-                                        <div className="col-md-6">
-                                            <div className="mb-3">
-                                                <label
-                                                    htmlFor="degree"
-                                                    className="form-label"
-                                                >
-                                                    Degree
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="degree"
-                                                    placeholder="Bachelor of Science"
-                                                    name="degree"
-                                                    onChange={handleInput}
-                                                />
-                                            </div>
-                                        </div>
-
                                         <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
@@ -295,6 +423,78 @@ const CvInputs = () => {
                                                 />
                                             </div>
                                         </div>
+                                        <div className="col-md-6">
+                                            <div className="mb-3">
+                                                <label
+                                                    htmlFor="degree"
+                                                    className="form-label"
+                                                >
+                                                    Faculty
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="degree"
+                                                    placeholder="Faculty of Science"
+                                                    name="degree"
+                                                    onChange={handleInput}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="mb-3">
+                                                <label
+                                                    htmlFor="schoolDepartment"
+                                                    className="form-label"
+                                                >
+                                                    Department
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="schoolDepartment"
+                                                    placeholder="AI"
+                                                    name="schoolDepartment"
+                                                    onChange={handleInput}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="mb-3">
+                                                <label
+                                                    htmlFor="schoolCity"
+                                                    className="form-label"
+                                                >
+                                                    City
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="schoolCity"
+                                                    placeholder="Giza"
+                                                    name="schoolCity"
+                                                    onChange={handleInput}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <div className="mb-3">
+                                                <label
+                                                    htmlFor="schoolCountry"
+                                                    className="form-label"
+                                                >
+                                                    Country
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="schoolCountry"
+                                                    placeholder="Egypt"
+                                                    name="schoolCountry"
+                                                    onChange={handleInput}
+                                                />
+                                            </div>
+                                        </div>
 
                                         <div className="col-md-3">
                                             <div className="mb-3">
@@ -302,7 +502,7 @@ const CvInputs = () => {
                                                     htmlFor="startSchoolDate"
                                                     className="form-label"
                                                 >
-                                                    School/University
+                                                    Start Date
                                                 </label>
                                                 <input
                                                     type="date"
@@ -321,7 +521,7 @@ const CvInputs = () => {
                                                     htmlFor="endSchoolDate"
                                                     className="form-label"
                                                 >
-                                                    School/University
+                                                    End Date
                                                 </label>
                                                 <input
                                                     type="date"
@@ -333,14 +533,10 @@ const CvInputs = () => {
                                             </div>
                                         </div>
 
-                                        <div className="nextBtn mt-5 text-end ">
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => setGoSteps(3)}
-                                            >
-                                                Next
-                                            </button>
-                                        </div>
+                                        <StepperLevel
+                                            currentLevel={goSteps}
+                                            setGoSteps={setGoSteps}
+                                        />
                                     </div>
                                 </div>
                             )}
@@ -380,38 +576,395 @@ const CvInputs = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="nextBtn mt-5 text-end">
-                                        <button
-                                            className="btn btn-primary"
-                                            onClick={() => setGoSteps(4)}
-                                        >
-                                            Next
-                                        </button>
-                                    </div>
+                                    <StepperLevel
+                                        currentLevel={goSteps}
+                                        setGoSteps={setGoSteps}
+                                    />
                                 </div>
                             )}
 
                             {goSteps === 4 && (
                                 <div className="container-fluid">
                                     <div className="row h-100">
-                                        <div className="nextBtn mt-5 text-end ">
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => setGoSteps(5)}
-                                            >
-                                                submit
-                                            </button>
-                                        </div>
+                                        {projectAddition === true ? (
+                                            <>
+                                                <div className="col-md-6">
+                                                    <div className="mb-3">
+                                                        <label
+                                                            htmlFor=""
+                                                            className="form-label"
+                                                        >
+                                                            Project Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            placeholder="Job Helper"
+                                                            name="projectName"
+                                                            onChange={
+                                                                handleProject
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <div className="mb-3">
+                                                        <label
+                                                            htmlFor=""
+                                                            className="form-label"
+                                                        >
+                                                            Project Date
+                                                        </label>
+                                                        <input
+                                                            type="date"
+                                                            className="form-control"
+                                                            name="projectDate"
+                                                            onChange={
+                                                                handleProject
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-12">
+                                                    <div className="mb-3">
+                                                        <label
+                                                            htmlFor=""
+                                                            className="form-label"
+                                                        >
+                                                            Project Details
+                                                        </label>
+                                                        <textarea
+                                                            className="form-control"
+                                                            placeholder="Projet description"
+                                                            name="projectDetails"
+                                                            style={{
+                                                                minHeight:
+                                                                    "150px",
+                                                            }}
+                                                            onChange={
+                                                                handleProject
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-12 d-flex align-items-center justify-content-end my-3 ">
+                                                    <div className="">
+                                                        <button
+                                                            className="btn btn-success"
+                                                            onClick={() =>
+                                                                addProject(
+                                                                    project
+                                                                )
+                                                            }
+                                                        >
+                                                            Submit Project
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            formData.projects.length > 0 && (
+                                                <>
+                                                    {formData.projects.map(
+                                                        (project, idx) => (
+                                                            <>
+                                                                <div className="col-12 mb-3 border d-flex justify-content-between align-items-center p-3">
+                                                                    <div>
+                                                                        <div className="title">
+                                                                            {
+                                                                                project.projectName
+                                                                            }
+                                                                        </div>
+                                                                        <div className="date">
+                                                                            {
+                                                                                project.projectDate
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="projectIcons">
+                                                                        <div className="delete">
+                                                                            <FontAwesomeIcon
+                                                                                icon={
+                                                                                    faTrash
+                                                                                }
+                                                                                role="button"
+                                                                                onClick={() =>
+                                                                                    deleteProject(
+                                                                                        idx
+                                                                                    )
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                        <div className="edit"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        )
+                                                    )}
+                                                </>
+                                            )
+                                        )}
+                                        <button
+                                            className="btn btn-info"
+                                            onClick={() =>
+                                                setProjectAddition(
+                                                    !projectAddition
+                                                )
+                                            }
+                                        >
+                                            Add Project
+                                        </button>
+
+                                        <StepperLevel
+                                            currentLevel={goSteps}
+                                            setGoSteps={setGoSteps}
+                                        />
                                     </div>
                                 </div>
+                            )}
+
+                            {goSteps === 5 && (
+                                <>
+                                    <div className="container-fluid">
+                                        <div className="row h-100">
+                                            {workAddition === true ? (
+                                                <>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label
+                                                                htmlFor=""
+                                                                className="form-label"
+                                                            >
+                                                                Job Title
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                placeholder="Web Developer"
+                                                                name="jobTitle"
+                                                                onChange={
+                                                                    handleJob
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label
+                                                                htmlFor=""
+                                                                className="form-label"
+                                                            >
+                                                                Company Name
+                                                            </label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                placeholder="Facebook"
+                                                                name="company"
+                                                                onChange={
+                                                                    handleJob
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label
+                                                                htmlFor=""
+                                                                className="form-label"
+                                                            >
+                                                                Start Date
+                                                            </label>
+                                                            <input
+                                                                type="date"
+                                                                className="form-control"
+                                                                name="startJobDate"
+                                                                onChange={
+                                                                    handleJob
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="col-md-6">
+                                                        <div className="mb-3">
+                                                            <label
+                                                                htmlFor=""
+                                                                className="form-label"
+                                                            >
+                                                                End Date
+                                                            </label>
+                                                            <input
+                                                                type="date"
+                                                                className="form-control"
+                                                                name="endJobDate"
+                                                                onChange={
+                                                                    handleJob
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="col-12">
+                                                        <div className="mb-3">
+                                                            <label
+                                                                htmlFor=""
+                                                                className="form-label"
+                                                            >
+                                                                Description
+                                                            </label>
+                                                            <textarea
+                                                                className="form-control"
+                                                                placeholder="jobDescription"
+                                                                name="jobDescription"
+                                                                onChange={
+                                                                    handleJob
+                                                                }
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12  d-flex align-items-center justify-content-end mt-3">
+                                                        <div className="">
+                                                            <button
+                                                                className="btn btn-success"
+                                                                onClick={() =>
+                                                                    addExperience(
+                                                                        experience
+                                                                    )
+                                                                }
+                                                            >
+                                                                Submit Project
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                formData.experiences.length >
+                                                    0 && (
+                                                    <>
+                                                        {formData.experiences.map(
+                                                            (
+                                                                experience,
+                                                                idx
+                                                            ) => (
+                                                                <>
+                                                                    <div className="col-12 mb-3 border d-flex justify-content-between align-items-center p-3">
+                                                                        <div>
+                                                                            <div className="title">
+                                                                                {
+                                                                                    experience.jobTitle
+                                                                                }
+                                                                            </div>
+                                                                            <div className="dates d-flex">
+                                                                                <div className="startDate me-2">
+                                                                                    {
+                                                                                        experience.startJobDate
+                                                                                    }
+                                                                                </div>
+                                                                                <div className="endDate">
+                                                                                    {
+                                                                                        experience.endJobDate
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="projectIcons">
+                                                                            <div className="delete">
+                                                                                <FontAwesomeIcon
+                                                                                    icon={
+                                                                                        faTrash
+                                                                                    }
+                                                                                    role="button"
+                                                                                    onClick={() =>
+                                                                                        deleteExperience(
+                                                                                            idx
+                                                                                        )
+                                                                                    }
+                                                                                />
+                                                                            </div>
+                                                                            <div className="edit"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                            )
+                                                        )}
+                                                    </>
+                                                )
+                                            )}
+                                            <button
+                                                className="btn btn-info mt-3"
+                                                onClick={() =>
+                                                    setWorkAddition(
+                                                        !workAddition
+                                                    )
+                                                }
+                                            >
+                                                Add Work Experience
+                                            </button>
+
+                                            <StepperLevel
+                                                currentLevel={goSteps}
+                                                setGoSteps={setGoSteps}
+                                            />
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {goSteps === 6 && (
+                                <>
+                                    <div className="container-fluid  py-3 min-vh-70 ">
+                                        <div className="row h-100 g-4">
+                                            <div className="col-md-6">
+                                                <input
+                                                    type="text"
+                                                    className="form-control mt-3"
+                                                    id="activity"
+                                                    name="activity"
+                                                    value={activity}
+                                                    onChange={handleActivity}
+                                                />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <div
+                                                    className="mt-3 btn btn-success w-100"
+                                                    onClick={() =>
+                                                        addActivity(activity)
+                                                    }
+                                                >
+                                                    Add Activity
+                                                </div>
+                                            </div>
+                                            <div className="col-12 d-flex flex-wrap ">
+                                                {formData.extracurricularActivities.map(
+                                                    (skill, index) => (
+                                                        <ExtracurricularActivity
+                                                            key={index}
+                                                            activity={skill}
+                                                            index={index}
+                                                            deleteActivity={
+                                                                deleteActvity
+                                                            }
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                        <StepperLevel
+                                            currentLevel={goSteps}
+                                            setGoSteps={setGoSteps}
+                                        />
+                                    </div>
+                                </>
                             )}
                         </div>
                         <div className="col-md-1"></div>
                         <div
-                            className="col-md-3 bg-info position-absolute end-0 "
-                            style={{ height: "428px" }}
+                            className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
+                            style={{ minHeight: "428px" }}
                         >
-                            .
+                            <Cv cv={formData} />
                         </div>
                     </div>
                 </div>

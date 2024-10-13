@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import logo from "./logo.svg";
 
-
 import Navbar from "./componenets/Navbar";
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -16,10 +15,9 @@ import Register from "./Pages/Register";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login";
 import Applications from "./Pages/Applications/Applications";
-import Jobs from "./Pages/Jobs/Jobs"
+import Jobs from "./Pages/Jobs/Jobs";
 
 function App() {
-
     useEffect(() => {
         new WOW.WOW({
             live: false,
@@ -28,7 +26,6 @@ function App() {
     return (
         <>
             <Navbar />
-
 
             <Routes>
                 <Route path="" element={<Home />} />
