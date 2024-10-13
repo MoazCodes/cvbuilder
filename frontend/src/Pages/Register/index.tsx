@@ -59,11 +59,13 @@ export default function Register() {
 
     function submit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        // console.log(`submit started`);
         setErr("");
         setErrs([]);
         const { error } = validation();
-
+        
         if (error) {
+            // console.log(`front end error` , error)
             error.details.map((e) => {
                 let impErr: string;
                 if (e.message.includes("first_name")) {
@@ -72,25 +74,33 @@ export default function Register() {
                     impErr = "Last name must be at least 3 characters long.";
                 } else if (e.message.includes("password")) {
                     impErr =
-                        "Password must be 8-30 characters long and contain only letters and numbers.";
+                    "Password must be 8-30 characters long and contain only letters and numbers.";
+                }else{
+                    impErr='Email must be valid (example@company.domain)'
                 }
                 setErrs((prv) => [...prv, impErr]);
             });
             return;
         }
-
+        
+        
+        // console.log(`send request`);
         axios
-            .post("http://localhost:8000/signup/", user)
-            .then((res) => {
-                clearInputs();
-                navigate("/login");
-            })
-            .catch((e) => {
-                console.log(e);
-                setErr(e.response.data?.error);
-            });
+        .post("http://localhost:8000/signup/", user)
+        .then((res) => {
+            // console.log(`answer`);
+            // console.log(res);
+            clearInputs();
+            navigate("/login");
+        })
+        .catch((e) => {
+            // console.log(`errord`);
+            // console.log(e);
+            setErr(e.response.data?.error);
+        });
+        // console.log(`submit ended`);
     }
-
+    
     return (
         <div className="vh-100 d-flex justify-content-center align-items-center">
             <form

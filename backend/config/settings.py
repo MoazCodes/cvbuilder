@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',  # Token authentication
     'rest_framework_simplejwt',  # JWT authentication
     'corsheaders',
+    'server',
 ]
 
 MIDDLEWARE = [
