@@ -16,6 +16,8 @@ import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login";
 import Applications from "./Pages/Applications/Applications";
 import Jobs from "./Pages/Jobs/Jobs";
+import Footer from "./componenets/Footer";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
     useEffect(() => {
@@ -36,7 +38,9 @@ function App() {
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/applications" element={<Applications />} />
                 <Route path="/templates/:id" element={<CvInputs />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
+            {/* <Footer /> */}
         </>
     );
 }
