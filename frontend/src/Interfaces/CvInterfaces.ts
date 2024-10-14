@@ -13,6 +13,8 @@ export interface Experience {
 }
 
 export interface CvModel {
+    cvName:string;
+    userId: number;
     firstName: string;
     lastName: string;
     job: string;
@@ -30,5 +32,5 @@ export interface CvModel {
     skills: string[];
     projects: Project[];
     experiences: Experience[];
-    extracurricularActivities: string[];
+    extraCurricularActivities: string[];
 }

@@ -4,10 +4,11 @@ import Skill from "../Skill/Skill";
 import "./styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import ExtracurricularActivity from "../extracurricularActivities";
+import ExtraCurricularActivity from "../extracurricularActivities";
 import Cv from "../CV";
 import StepperLevel from "../stepperLevels";
 import { Experience, Project } from "../../Interfaces/CvInterfaces";
+import axios from "axios";
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
@@ -30,6 +31,8 @@ const CvInputs = () => {
     });
 
     const [formData, setFormData] = useState({
+        userId: 1,
+        cvName:"aaa",
         firstName: "",
         lastName: "",
         job: "",
@@ -47,8 +50,24 @@ const CvInputs = () => {
         skills: [] as string[],
         projects: [] as Project[], //project={ projectName: string ,projectDate: string ,projectDetails: string ,}
         experiences: [] as Experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
-        extracurricularActivities: [] as string[],
+        extraCurricularActivities: [] as string[]
     });
+
+    const saveCvToDatabase = () => {
+        axios
+            .post(`http://localhost:8000/addcv/`, formData)
+            .then((res) => {
+                // console.log(`answer`);
+                console.log(res);
+            })
+            .catch((e) => {
+                // console.log(`errord`);
+                console.log(e);
+                // setErr(e.response.data?.error);
+            });
+
+        console.log(formData);
+    };
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
@@ -77,8 +96,8 @@ const CvInputs = () => {
         if (activity.trim()) {
             setFormData({
                 ...formData,
-                extracurricularActivities: [
-                    ...formData.extracurricularActivities,
+                extraCurricularActivities: [
+                    ...formData.extraCurricularActivities,
                     `• ` + activity,
                 ],
             });
@@ -97,8 +116,8 @@ const CvInputs = () => {
     let deleteActvity = (index: number) => {
         setFormData({
             ...formData,
-            extracurricularActivities:
-                formData.extracurricularActivities.filter(
+            extraCurricularActivities:
+                formData.extraCurricularActivities.filter(
                     (item, i) => i !== index
                 ),
         });
@@ -236,7 +255,7 @@ const CvInputs = () => {
                             backgroundColor:
                                 goSteps >= 6 ? "var(--main-color)" : "#aaa",
                         }}
-                        label="Extracurricular Activities"
+                        label="ExtraCurricular Activities"
                     />
                 </Stepper>
                 <div className="container mt-5">
@@ -924,9 +943,9 @@ const CvInputs = () => {
                                                 </div>
                                             </div>
                                             <div className="col-12 d-flex flex-wrap ">
-                                                {formData.extracurricularActivities.map(
+                                                {formData.extraCurricularActivities.map(
                                                     (skill, index) => (
-                                                        <ExtracurricularActivity
+                                                        <ExtraCurricularActivity
                                                             key={index}
                                                             activity={skill}
                                                             index={index}
@@ -951,7 +970,8 @@ const CvInputs = () => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            <Cv cv={formData} />
+                            <button onClick={saveCvToDatabase}>dddd</button>
+                            <Cv cv={formData} isEditable={false} />
                         </div>
                     </div>
                 </div>

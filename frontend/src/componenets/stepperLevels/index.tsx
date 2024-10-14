@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 interface stepperLevelProps {
     currentLevel: number;
     setGoSteps: (currentLevel: number) => void;

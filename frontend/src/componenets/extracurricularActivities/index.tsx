@@ -8,7 +8,7 @@ interface activityProps {
     deleteActivity: (index: number) => void;
 }
 
-const ExtracurricularActivity = ({
+const ExtraCurricularActivity = ({
     activity,
     index,
     deleteActivity,
@@ -32,4 +32,4 @@ const ExtracurricularActivity = ({
     );
 };
 
-export default ExtracurricularActivity;
+export default ExtraCurricularActivity;
