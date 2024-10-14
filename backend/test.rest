@@ -15,8 +15,10 @@ POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cv_name":"fourth cv",
-    "user_id": 1,
+    "cvName": "first cv",
+    "userId": 1,
+    "firstName":"ahmed",
+    "lastName":"mohamed",
     "job": "driver engineer",
     "city": "giza",
     "country": "egypt",
@@ -24,50 +26,51 @@ Content-Type: application/json
     "objective": "string",
     "degree": "bechlor of cs",
     "school": "cairo uni",
-    "school_department": "computer science",
-    "school_city": "gize",
-    "school_country": "string",
-    "start_school_date": "2024-10-13T18:06:11.056Z",
-    "end_school_date": "2024-10-13T18:06:11.056Z",
+    "schoolDepartment": "computer science",
+    "schoolCity": "gize",
+    "schoolCountry": "string",
+    "startSchoolDate": "2024-10-13T18:06:11.056Z",
+    "endSchoolDate": "2024-10-13T18:06:11.056Z",
     "skills": [
         "hard worker",
         "team orineted"
     ],
     "projects": [
         {
-            "project_name": "cv builder react",
-            "project_date": "2024-10-13T18:06:11.056Z",
-            "project_details": "cv builder react"
+            "projectName": "cv builder react",
+            "projectDate": "2024-10-13T18:06:11.056Z",
+            "projectDetails": "cv builder react"
         },
         {
-            "project_name": "restaurant react",
-            "project_date": "2024-10-13T18:06:11.056Z",
-            "project_details": "restaurant react"
+            "projectName": "restaurant react",
+            "projectDate": "2024-10-13T18:06:11.056Z",
+            "projectDetails": "restaurant react"
         }
     ],
     "experiences": [
         {
-            "job_title": "team leader",
-            "start_date": "2024-10-13T18:06:11.056Z",
-            "end_date": "2024-10-13T18:06:11.056Z",
-            "job_description": "team leader",
+            "jobTitle": "team leader",
+            "startDate": "2024-10-13T18:06:11.056Z",
+            "endDate": "2024-10-13T18:06:11.056Z",
+            "jobDescription": "team leader",
             "company": "team leader"
         },
         {
-            "job_title": "software intern",
-            "start_date": "2024-10-13T18:06:11.056Z",
-            "end_date": "2024-10-13T18:06:11.056Z",
-            "job_description": "software intern",
+            "jobTitle": "software intern",
+            "startDate": "2024-10-13T18:06:11.056Z",
+            "endDate": "2024-10-13T18:06:11.056Z",
+            "jobDescription": "software intern",
             "company": "software intern"
         }
     ],
-    "extra_curricular_activities": [
+    "extraCurricularActivities": [
         "hamda",
         "adf",
         "afd",
         "fad"
     ]
 }
+
 
 
 ###
@@ -80,54 +83,56 @@ put http://127.0.0.1:8000/editcv/
 Content-Type: application/json
 
 {
-    "cv_id":"1",
-    "cv_name":"7th cv",
-    "user_id": 1,
+    "cvId": 1,
+    "cvName": "first cv",
+    "userId": 1,
+    "firstName": "ahmed",
+    "lastName": "mohamed",
     "job": "driver engineer",
-    "city": "cairo",
+    "city": "giza",
     "country": "egypt",
     "email": "m@gmil.com",
     "objective": "string",
     "degree": "bechlor of cs",
     "school": "cairo uni",
-    "school_department": "computer science",
-    "school_city": "gize",
-    "school_country": "string",
-    "start_school_date": "2024-10-13T18:06:11.056Z",
-    "end_school_date": "2024-10-13T18:06:11.056Z",
+    "schoolDepartment": "computer science",
+    "schoolCity": "gize",
+    "schoolCountry": "string",
+    "startSchoolDate": "2024-10-13T18:06:11.056Z",
+    "endSchoolDate": "2024-10-13T18:06:11.056Z",
     "skills": [
         "hard worker",
         "team orineted"
     ],
     "projects": [
         {
-            "project_name": "cv builder react",
-            "project_date": "2024-10-13T18:06:11.056Z",
-            "project_details": "cv builder react"
+            "projectName": "cv builder react",
+            "projectDate": "2024-10-13T18:06:11.056Z",
+            "projectDetails": "cv builder react"
         },
         {
-            "project_name": "restaurant react",
-            "project_date": "2024-10-13T18:06:11.056Z",
-            "project_details": "restaurant react"
+            "projectName": "restaurant react",
+            "projectDate": "2024-10-13T18:06:11.056Z",
+            "projectDetails": "restaurant react"
         }
     ],
     "experiences": [
         {
-            "job_title": "team leader",
-            "start_date": "2024-10-13T18:06:11.056Z",
-            "end_date": "2024-10-13T18:06:11.056Z",
-            "job_description": "team leader",
+            "jobTitle": "team leader",
+            "startDate": "2024-10-13T18:06:11.056Z",
+            "endDate": "2024-10-13T18:06:11.056Z",
+            "jobDescription": "team leader",
             "company": "team leader"
         },
         {
-            "job_title": "software intern",
-            "start_date": "2024-10-13T18:06:11.056Z",
-            "end_date": "2024-10-13T18:06:11.056Z",
-            "job_description": "software intern",
+            "jobTitle": "software intern",
+            "startDate": "2024-10-13T18:06:11.056Z",
+            "endDate": "2024-10-13T18:06:11.056Z",
+            "jobDescription": "software intern",
             "company": "software intern"
         }
     ],
-    "extra_curricular_activities": [
+    "extraCurricularActivities": [
         "hamda",
         "adf",
         "afd",
