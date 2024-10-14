@@ -12,8 +12,10 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Experience, Project } from "../../Interfaces/CvInterfaces";
 import { CvModel } from "../../Interfaces/CvInterfaces";
+import { isEditable } from "@testing-library/user-event/dist/utils";
 interface CvProps {
     cv: CvModel;
+    isEditable: boolean;
 }
 
 const Pdf = ({ cv }: CvProps) => {
@@ -134,13 +136,13 @@ const Pdf = ({ cv }: CvProps) => {
                     )}
 
                     {/* Extracurricular Activities Section */}
-                    {cv.extracurricularActivities.length !== 0 && (
+                    {cv.extraCurricularActivities.length !== 0 && (
                         <View style={[styles.section]}>
                             <Text style={[styles.title, styles.borderBottom]}>
                                 Extracurricular Activities
                             </Text>
                             <View style={styles.content}>
-                                {cv.extracurricularActivities.map(
+                                {cv.extraCurricularActivities.map(
                                     (activity, index) => (
                                         <View
                                             key={index}
@@ -253,10 +255,10 @@ const styles = StyleSheet.create({
 const Cv = ({ cv }: CvProps) => {
     return (
         <>
-            <div className="container ">
+            <div className="container bg-light">
                 <div className="row">
                     <div className="col-12">
-                        <div className="personalDetails text-center mt-1">
+                        <div className="personalDetails text-center mt-1 text-black">
                             <div
                                 className="name fw-bold "
                                 style={{ fontSize: "80%" }}
@@ -296,7 +298,7 @@ const Cv = ({ cv }: CvProps) => {
                                     Objective
                                 </div>
                                 <p
-                                    className="content m-0 mb-1 text-break"
+                                    className="content m-0 mb-1 text-break text-black"
                                     style={{ fontSize: "45%" }}
                                 >
                                     {cv.objective}
@@ -315,10 +317,10 @@ const Cv = ({ cv }: CvProps) => {
                                     Education
                                 </div>
                                 <div
-                                    className="content text-center fw-bold "
+                                    className="content text-center fw-bold text-black"
                                     style={{ fontSize: "45%" }}
                                 >
-                                    <div className="schoolDetails d-flex justify-content-between">
+                                    <div className="schoolDetails d-flex justify-content-between ">
                                         <span className="schoolName text-decoration-underline">
                                             {cv.city
                                                 ? `${cv.school}, `
@@ -346,7 +348,7 @@ const Cv = ({ cv }: CvProps) => {
                                 </div>
                                 <p
                                     style={{ fontSize: "45%" }}
-                                    className="m-0 mb-1"
+                                    className="m-0 mb-1 text-black"
                                 >
                                     Studied{" "}
                                     <span className="fw-bold">
@@ -359,7 +361,7 @@ const Cv = ({ cv }: CvProps) => {
                         </div>
                     )}
 
-                    {cv.skills.length !== 0 && (
+                    {cv?.skills?.length !== 0 ? (
                         <div className="col-12">
                             <div className="skills mb-1">
                                 <div
@@ -369,16 +371,18 @@ const Cv = ({ cv }: CvProps) => {
                                     Skills
                                 </div>
                                 <p
-                                    className="content d-flex m-0"
+                                    className="content d-flex m-0 text-black"
                                     style={{ fontSize: "45%" }}
                                 >
                                     {cv.skills.join(" | ")}
                                 </p>
                             </div>
                         </div>
+                    ) : (
+                        <div>loading..</div>
                     )}
 
-                    {cv.projects.length !== 0 && (
+                    {cv?.projects?.length !== 0 ? (
                         <div className="col-12">
                             <div className="projects">
                                 <div
@@ -405,7 +409,7 @@ const Cv = ({ cv }: CvProps) => {
                                             </div>
                                         </div>
 
-                                        <div className="description text-break">
+                                        <div className="description text-break text-black">
                                             {project.projectDetails
                                                 .split("\n")
                                                 .map((line, index) => (
@@ -419,9 +423,11 @@ const Cv = ({ cv }: CvProps) => {
                                 ))}
                             </div>
                         </div>
+                    ) : (
+                        <div>loading</div>
                     )}
 
-                    {cv.extracurricularActivities.length !== 0 && (
+                    {cv?.extraCurricularActivities?.length !== 0 ? (
                         <div className="col-12">
                             <div className="activities mb-1">
                                 <div
@@ -434,9 +440,12 @@ const Cv = ({ cv }: CvProps) => {
                                     className="content m-0"
                                     style={{ fontSize: "45%" }}
                                 >
-                                    {cv.extracurricularActivities.map(
+                                    {cv?.extraCurricularActivities?.map(
                                         (activity, index) => (
-                                            <span key={index}>
+                                            <span
+                                                key={index}
+                                                className="text-black"
+                                            >
                                                 {activity}
                                                 <br />
                                             </span>
@@ -445,16 +454,20 @@ const Cv = ({ cv }: CvProps) => {
                                 </div>
                             </div>
                         </div>
+                    ) : (
+                        <div>loading...</div>
                     )}
                 </div>
-                <PDFDownloadLink
-                    document={<Pdf cv={cv} />}
-                    fileName={`a_CV.pdf`}
-                    className="position-absolute  start-50 translate-middle-x"
-                    style={{ bottom: "-50px" }}
-                >
-                    <button className="btn btn-success">Download</button>
-                </PDFDownloadLink>
+                {!isEditable && (
+                    <PDFDownloadLink
+                        document={<Pdf cv={cv} isEditable={false} />}
+                        fileName={`a_CV.pdf`}
+                        className="position-absolute  start-50 translate-middle-x"
+                        style={{ bottom: "-50px" }}
+                    >
+                        <button className="btn btn-success">Download</button>
+                    </PDFDownloadLink>
+                )}
             </div>
         </>
     );

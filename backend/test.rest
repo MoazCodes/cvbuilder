@@ -2,20 +2,20 @@
 POST http://127.0.0.1:8000/login/
 Content-Type: application/json
 
-{"email":"az@gmail.com","password":"123"}
+{"email":"az@gmail.com","password":"123456789"}
 
 ###
 POST http://127.0.0.1:8000/signup/
 Content-Type: application/json
 
-{"first_name":"Moaz","last_name":"mohamed","email":"az@gmail.com","password":"123"}
+{"first_name":"Moaz","last_name":"mohamed","email":"az@gmail.com","password":"123456789"}
 
 ###
 POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cvName": "third cv",
+    "cvName": "shshf cv",
     "userId": 1,
     "template":"cvtemp",
     "firstName":"ahmed",

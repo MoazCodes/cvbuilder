@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 const Navbar = () => {
+    const navigate = useNavigate()
     function handleLogout() {
         localStorage.removeItem("token");
         // updateUserData();
         console.log("loged out ");
+        navigate('/login')
     }
+
+    const { isLoggedIn } = useContext(UserContext);
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -46,7 +51,7 @@ const Navbar = () => {
                             <Link className="nav-link mx-2" to={"templates"}>
                                 Cv
                             </Link>
-                            {localStorage.getItem("token") == null ? (
+                            {!isLoggedIn ? (
                                 <>
                                     <Link
                                         className="nav-link mx-2"
