@@ -10,42 +10,10 @@ import ReactPDF, {
 } from "@react-pdf/renderer";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
-interface project {
-    projectName: string;
-    projectDate: string;
-    projectDetails: string;
-}
-
-interface experience {
-    jobTitle: string;
-    startJobDate: string;
-    endJobDate: string;
-    jobDescription: string;
-    company: string;
-}
+import { Experience, Project } from "../../Interfaces/CvInterfaces";
+import { CvModel } from "../../Interfaces/CvInterfaces";
 interface CvProps {
-    cv: cv;
-}
-
-interface cv {
-    firstName: string;
-    lastName: string;
-    job: string;
-    city: string;
-    country: string;
-    email: string;
-    objective: string;
-    degree: string;
-    school: string;
-    schoolDepartment: string;
-    schoolCity: string;
-    schoolCountry: string;
-    startSchoolDate: string;
-    endSchoolDate: string;
-    skills: string[];
-    projects: project[];
-    experiences: experience[];
-    extracurricularActivities: string[];
+    cv: CvModel;
 }
 
 const Pdf = ({ cv }: CvProps) => {
@@ -355,7 +323,7 @@ const Cv = ({ cv }: CvProps) => {
                                             {cv.city
                                                 ? `${cv.school}, `
                                                 : cv.school}
-                                            {cv.schoolCountry
+                                            {cv?.schoolCountry
                                                 ? `${cv.schoolCity}, `
                                                 : cv.schoolCity}
                                             {cv.schoolCountry}{" "}

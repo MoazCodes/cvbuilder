@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-
-    function handleLogout(){
+    function handleLogout() {
         localStorage.removeItem("token");
         // updateUserData();
         console.log("loged out ");
-
     }
     return (
         <>
@@ -48,15 +46,29 @@ const Navbar = () => {
                             <Link className="nav-link mx-2" to={"templates"}>
                                 Cv
                             </Link>
-                            <Link className="nav-link mx-2" to={"login"}>
-                                Login
-                            </Link>
-                            <Link className="nav-link mx-2" to={"register"}>
-                                Register
-                            </Link>
-                            <button className="btn btn-outline-danger" onClick={handleLogout}>
-                                Logout
-                            </button>
+                            {localStorage.getItem("token") == null ? (
+                                <>
+                                    <Link
+                                        className="nav-link mx-2"
+                                        to={"login"}
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        className="nav-link mx-2"
+                                        to={"register"}
+                                    >
+                                        Register
+                                    </Link>
+                                </>
+                            ) : (
+                                <button
+                                    className="btn btn-outline-danger"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

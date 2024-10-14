@@ -7,20 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import ExtracurricularActivity from "../extracurricularActivities";
 import Cv from "../CV";
 import StepperLevel from "../stepperLevels";
-
-interface project {
-    projectName: string;
-    projectDate: string;
-    projectDetails: string;
-}
-
-interface experience {
-    jobTitle: string;
-    startJobDate: string;
-    endJobDate: string;
-    jobDescription: string;
-    company: string;
-}
+import { Experience, Project } from "../../Interfaces/CvInterfaces";
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
@@ -58,8 +45,8 @@ const CvInputs = () => {
         startSchoolDate: "",
         endSchoolDate: "",
         skills: [] as string[],
-        projects: [] as project[], //project={ projectName: string ,projectDate: string ,projectDetails: string ,}
-        experiences: [] as experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
+        projects: [] as Project[], //project={ projectName: string ,projectDate: string ,projectDetails: string ,}
+        experiences: [] as Experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
         extracurricularActivities: [] as string[],
     });
 
@@ -132,7 +119,7 @@ const CvInputs = () => {
         setExperience({ ...experience, [e.target.name]: e.target.value });
     };
 
-    let addProject = (project: project) => {
+    let addProject = (project: Project) => {
         if (project.projectName.trim() !== "") {
             setFormData({
                 ...formData,
@@ -149,7 +136,7 @@ const CvInputs = () => {
         console.log(formData);
     };
 
-    let addExperience = (experience: experience) => {
+    let addExperience = (experience: Experience) => {
         if (
             experience.jobTitle.trim() !== "" &&
             experience.company.trim() !== ""
