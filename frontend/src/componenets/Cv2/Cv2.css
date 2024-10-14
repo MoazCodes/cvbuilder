@@ -1,0 +1,43 @@
+.cv-container {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.cv-container h1 {
+    font-size: 2.5rem;
+}
+
+.cv-container .section {
+    margin-bottom: 20px;
+}
+
+.cv-container ul {
+    list-style-type: disc; 
+    padding-left: 20px;
+}
+
+.cv-container li::marker {
+    color: black;
+}
+
+.cv-container li {
+    padding: 5px 0;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.bg-gray-light {
+    background-color: #e8e6e7;
+}
+
+.w-90 {
+    width: 90%;
+}

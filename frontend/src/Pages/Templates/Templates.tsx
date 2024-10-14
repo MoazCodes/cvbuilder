@@ -28,7 +28,7 @@ const Templates = () => {
                                 className="templateImage p-1 border "
                             >
                                 <img
-                                    src="assets/cv4.jpg"
+                                    src="assets/cv2-template.png"
                                     alt="cvTemplate"
                                     style={{ width: "100%" }}
                                 />
