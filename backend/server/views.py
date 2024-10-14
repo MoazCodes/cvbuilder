@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User  
 from django.core.exceptions import ValidationError
@@ -72,11 +72,12 @@ def login_view(request):
     if not email or not password:
         return Response({'error': 'Email and password are required'}, status=status.HTTP_400_BAD_REQUEST)
 
-    user = authenticate(username=email, password=password)
-
-
-    if user is not None:
-        
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    if password == user.password :
         token=generate_jwt_token(user)  
         return Response({
             'message':'Successfuly logined',
