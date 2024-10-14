@@ -14,13 +14,12 @@ const MyCvs = () => {
         console.log("as" + userData.id)
         axios
             .delete(`http://127.0.0.1:8000/deleteallcvs/`,{
-                data: userData.id,
-                headers: {
-                    'Content-Type': 'application/json' // Set the content type
-                } 
+                data: {
+                    "userId": userData.id
+                  }
             })
             .then((res) => {
-                console.log("res" + res)
+                console.log("res" ,res)
                 setUserCvs([]);
             })
             .catch((error) => {
@@ -32,7 +31,7 @@ const MyCvs = () => {
             <div className="container min-vh-100 d-flex flex-column align-items-center justify-content-center mt-4">
                 <h2 className="my-5 ">My Cvs</h2>
                 <div className="row justify-content-center h-50 g-4">
-                    {userCvs?.data?.map((cv:CvModel) => (
+                    { (userCvs?.data?.length)&& userCvs?.data?.map((cv:CvModel) => (
                         <div
                             onClick={()=>navigate(`/templates/${cv.cvId}`)}
                             className="col-md-4 col-sm-6 "
