@@ -83,10 +83,10 @@ put http://127.0.0.1:8000/editcv/
 Content-Type: application/json
 
 {
-    "cvId": 1,
+    "cvId": 2,
     "cvName": "first cv",
     "userId": 1,
-    "firstName": "ahmed",
+    "firstName": "zoz",
     "lastName": "mohamed",
     "job": "driver engineer",
     "city": "giza",
