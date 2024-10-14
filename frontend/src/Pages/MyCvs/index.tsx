@@ -1,41 +1,51 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useActionData, useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, redirect, useActionData, useNavigate, useSearchParams } from "react-router-dom";
 import Cv from "../../componenets/CV";
+import { CvModel } from "../../Interfaces/CvInterfaces";
+import { UserContext } from "../../Context/UserContext";
+
+type ArgumentsForDeletion = {userId:number}
 
 const MyCvs = () => {
-    const [myCvs, setMyCvs] = useState({ data: [] });
-    useEffect(() => {
+    const {userCvs,setUserCvs,getCvsErrors,userData} = useContext(UserContext);
+    const navigate = useNavigate();
+    const deleteAllCvs = ()=>{
+        console.log("as" + userData.id)
         axios
-            .get(`http://localhost:8000/cv/${1}`)
-            .then((res) => {
-                // console.log(`answer`);
-                console.log(res);
-
-                setMyCvs(res.data);
+            .delete(`http://127.0.0.1:8000/deleteallcvs/`,{
+                data: userData.id,
+                headers: {
+                    'Content-Type': 'application/json' // Set the content type
+                } 
             })
-            .catch((e) => {
-                // console.log(`errord`);
-                console.log(e);
-                // setErr(e.response.data?.error);
+            .then((res) => {
+                console.log("res" + res)
+                setUserCvs([]);
+            })
+            .catch((error) => {
+                console.log(error)
             });
-    }, []);
-
+    }
     return (
         <>
             <div className="container min-vh-100 d-flex flex-column align-items-center justify-content-center mt-4">
-                <h2 className="mb-5">My Cvs</h2>
+                <h2 className="my-5 ">My Cvs</h2>
                 <div className="row justify-content-center h-50 g-4">
-                    {myCvs.data.map((cv) => (
+                    {userCvs?.data?.map((cv:CvModel) => (
                         <div
-                            className="col-md-4 col-sm-6"
+                            onClick={()=>navigate(`/templates/${cv.cvId}`)}
+                            className="col-md-4 col-sm-6 "
                             role="button"
-                            style={{ maxWidth: "240px" }}
+                            style={{width:"240px", maxWidth: "240px" }}
+                            
                         >
-                            <Cv cv={cv} isEditable={true} />
+                            <div className="bg-light" style={{minHeight: "350px"}}><Cv cv={cv} isEditableTemplate={true}/></div>
                         </div>
                     ))}
+                    
                 </div>
+                <button className="btn btn-danger mt-5 px-5" onClick={deleteAllCvs}>Clear All Cvs</button>
             </div>
         </>
     );

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Joi, { func } from "joi";
 import axios from "axios";
 import { Link, redirect, useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
 //error message from frontend and backend
 
@@ -12,6 +13,7 @@ type User = {
 };
 
 export default function Login() {
+    const {saveUserData,setIsloggedIn} = useContext(UserContext);
     const navigate = useNavigate();
     const [user, setUser] = useState<User>({
         email: "",
@@ -75,6 +77,7 @@ export default function Login() {
                 let token: string;
                 token = res?.data?.token;
                 localStorage.setItem("token", token);
+                saveUserData();
                 navigate("/");
                 clearInputs();
             })

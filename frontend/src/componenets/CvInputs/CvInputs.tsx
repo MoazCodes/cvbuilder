@@ -32,6 +32,7 @@ const CvInputs = () => {
 
     const [formData, setFormData] = useState({
         userId: 1,
+        cvId:1,
         cvName:"aaa",
         firstName: "",
         lastName: "",
@@ -53,21 +54,7 @@ const CvInputs = () => {
         extraCurricularActivities: [] as string[]
     });
 
-    const saveCvToDatabase = () => {
-        axios
-            .post(`http://localhost:8000/addcv/`, formData)
-            .then((res) => {
-                // console.log(`answer`);
-                console.log(res);
-            })
-            .catch((e) => {
-                // console.log(`errord`);
-                console.log(e);
-                // setErr(e.response.data?.error);
-            });
-
-        console.log(formData);
-    };
+    
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
@@ -264,6 +251,24 @@ const CvInputs = () => {
                             {goSteps === 0 && (
                                 <div className="container-fluid">
                                     <div className="row">
+                                    <div className="col-md-12">
+                                            <div className="mb-3">
+                                                <label
+                                                    htmlFor="cvName"
+                                                    className="form-label"
+                                                >
+                                                    Cv Name
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control "
+                                                    id="cvName"
+                                                    placeholder="AhmedCv_1"
+                                                    onChange={handleInput}
+                                                    name="cvName"
+                                                />
+                                            </div>
+                                        </div>
                                         <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
@@ -970,8 +975,8 @@ const CvInputs = () => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            <button onClick={saveCvToDatabase}>dddd</button>
-                            <Cv cv={formData} isEditable={false} />
+                            
+                            <Cv cv={formData} isEditableTemplate={false}/>
                         </div>
                     </div>
                 </div>

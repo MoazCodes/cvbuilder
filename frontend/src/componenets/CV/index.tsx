@@ -8,14 +8,16 @@ import ReactPDF, {
     View,
     Link as PdfLink,
 } from "@react-pdf/renderer";
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Experience, Project } from "../../Interfaces/CvInterfaces";
 import { CvModel } from "../../Interfaces/CvInterfaces";
 import { isEditable } from "@testing-library/user-event/dist/utils";
+import axios from "axios";
+import { UserContext } from "../../Context/UserContext";
 interface CvProps {
     cv: CvModel;
-    isEditable: boolean;
+    isEditableTemplate: boolean;
 }
 
 const Pdf = ({ cv }: CvProps) => {
@@ -252,10 +254,41 @@ const styles = StyleSheet.create({
     },
 });
 
-const Cv = ({ cv }: CvProps) => {
+const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
+    const {setUserCvs,userCvs,getCvsErrors,setGetCvsErrors} = useContext(UserContext);
+    useEffect(() => {
+        if (getCvsErrors) {
+            const timer = setTimeout(() => {
+                setGetCvsErrors(!getCvsErrors); // Hide the error after 3 seconds
+            }, 3000);
+
+            // Clear the timeout if the component unmounts or error changes
+            return () => clearTimeout(timer);
+        }
+    }, [getCvsErrors]);
+    const saveCvToDatabase = () => {
+        if(!getCvsErrors){axios
+            .post(`http://localhost:8000/addcv/`, cv)
+            .then((res) => {
+                
+                console.log(res);
+                setUserCvs({
+                    ...userCvs, 
+                    data: [...(userCvs.data), cv] 
+                });
+            })
+            .catch((error) => {
+                setGetCvsErrors(error.response.data.error);
+                console.log(error.response.data.error);
+                console.log(error);
+                
+            });}
+        
+            
+    };
     return (
         <>
-            <div className="container bg-light">
+            <div className="container bg-light" style={{minHeight: "300px"}}>
                 <div className="row">
                     <div className="col-12">
                         <div className="personalDetails text-center mt-1 text-black">
@@ -361,7 +394,7 @@ const Cv = ({ cv }: CvProps) => {
                         </div>
                     )}
 
-                    {cv?.skills?.length !== 0 ? (
+                    {cv?.skills?.length !== 0 && (
                         <div className="col-12">
                             <div className="skills mb-1">
                                 <div
@@ -378,11 +411,9 @@ const Cv = ({ cv }: CvProps) => {
                                 </p>
                             </div>
                         </div>
-                    ) : (
-                        <div>loading..</div>
-                    )}
+                    ) }
 
-                    {cv?.projects?.length !== 0 ? (
+                    {cv?.projects?.length !== 0 && (
                         <div className="col-12">
                             <div className="projects">
                                 <div
@@ -423,11 +454,9 @@ const Cv = ({ cv }: CvProps) => {
                                 ))}
                             </div>
                         </div>
-                    ) : (
-                        <div>loading</div>
-                    )}
+                    ) }
 
-                    {cv?.extraCurricularActivities?.length !== 0 ? (
+                    {cv?.extraCurricularActivities?.length !== 0 && (
                         <div className="col-12">
                             <div className="activities mb-1">
                                 <div
@@ -454,21 +483,34 @@ const Cv = ({ cv }: CvProps) => {
                                 </div>
                             </div>
                         </div>
-                    ) : (
-                        <div>loading...</div>
-                    )}
+                    ) }
                 </div>
-                {!isEditable && (
+                {!isEditableTemplate && (
                     <PDFDownloadLink
-                        document={<Pdf cv={cv} isEditable={false} />}
-                        fileName={`a_CV.pdf`}
+                        document={<Pdf cv={cv} isEditableTemplate={false} />}
+                        fileName={`${cv.cvName}.pdf`}
                         className="position-absolute  start-50 translate-middle-x"
                         style={{ bottom: "-50px" }}
+                        onClick={saveCvToDatabase}
                     >
                         <button className="btn btn-success">Download</button>
                     </PDFDownloadLink>
                 )}
             </div>
+            {getCvsErrors&& (<div className="alert alert-danger position-fixed  p-3" style={{bottom:"10px",right:"10px"}}>
+                <div >
+                    <div className="toast-header">
+                        
+                        <strong className="me-auto">Can't save to our database</strong>
+                        <small>Now</small>
+                        <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div className="toast-body">
+                        {getCvsErrors}
+                    </div>
+                </div>
+            </div>)}
+            
         </>
     );
 };

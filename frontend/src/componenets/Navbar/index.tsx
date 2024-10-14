@@ -3,15 +3,10 @@ import "./style.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 const Navbar = () => {
+    const {userData ,logout} = useContext(UserContext);
     const navigate = useNavigate()
-    function handleLogout() {
-        localStorage.removeItem("token");
-        // updateUserData();
-        console.log("loged out ");
-        navigate('/login')
-    }
+    
 
-    const { isLoggedIn } = useContext(UserContext);
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -51,7 +46,7 @@ const Navbar = () => {
                             <Link className="nav-link mx-2" to={"templates"}>
                                 Cv
                             </Link>
-                            {!isLoggedIn ? (
+                            {userData===null? (
                                 <>
                                     <Link
                                         className="nav-link mx-2"
@@ -69,7 +64,7 @@ const Navbar = () => {
                             ) : (
                                 <button
                                     className="btn btn-outline-danger"
-                                    onClick={handleLogout}
+                                    onClick={logout}
                                 >
                                     Logout
                                 </button>

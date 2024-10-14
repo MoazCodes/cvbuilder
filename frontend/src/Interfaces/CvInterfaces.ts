@@ -14,6 +14,7 @@ export interface Experience {
 
 export interface CvModel {
     cvName:string;
+    cvId:number;
     userId: number;
     firstName: string;
     lastName: string;
