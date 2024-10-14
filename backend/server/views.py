@@ -109,6 +109,7 @@ def add_cv(request):
 
     # Create a new CV instance
     cv = CV.objects.create(
+        template=data.get('template'),
         user=user,
         first_name=data.get('firstName'),
         last_name=data.get('lastName'),
@@ -166,10 +167,11 @@ def add_cv(request):
 
 
 @api_view(['GET'])
-def retrieveCv(request, id):
+def retrieveCvs(request, id):
     try:
         cvs = CV.objects.filter(user=id)
         data = [{
+
             "cvId": cv.id,
             "firstName":cv.first_name,
             "lastName":cv.last_name,
@@ -177,6 +179,7 @@ def retrieveCv(request, id):
             "userId": cv.user.id,
             "job": cv.job_title,
             "city": cv.city,
+            "template": cv.template,
             "country": cv.country,
             "email": cv.email,
             "objective": cv.objective,
@@ -214,6 +217,57 @@ def retrieveCv(request, id):
 
 
 
+
+@api_view(['GET'])
+def retrieveCv(request, id):
+    try:
+        cv = CV.objects.get(id=id)
+        data = {
+
+            "cvId": cv.id,
+            "firstName":cv.first_name,
+            "lastName":cv.last_name,
+            "cvName": cv.cv_name,
+            "userId": cv.user.id,
+            "job": cv.job_title,
+            "city": cv.city,
+            "template": cv.template,
+            "country": cv.country,
+            "email": cv.email,
+            "objective": cv.objective,
+            "degree": cv.degree,
+            "school": cv.school_name,
+            "schoolDepartment": cv.school_department,
+            "schoolCity": cv.school_city,
+            "schoolCountry": cv.school_country,
+            "startSchoolDate": cv.start_school_date,
+            "endSchoolDate": cv.end_school_date,
+            "skills": [skill.skill_name for skill in cv.skills.all()],
+            "projects": [
+                {
+                    "projectName": project.project_name,
+                    "projectDate": project.project_date,
+                    "projectDetails": project.project_details,
+                } for project in cv.projects.all()
+            ],
+            "experiences": [
+                {
+                    "jobTitle": experience.job_title,
+                    "company": experience.company,
+                    "startDate": experience.start_job_date,
+                    "endDate": experience.end_job_date,
+                    "jobDescription": experience.job_description,
+                } for experience in cv.experiences.all()
+            ],
+            "extraCurricularActivities": [
+                activity.activity_name for activity in cv.extracurricular_activities.all()
+            ],
+        } 
+        return Response({"data": data}, status=status.HTTP_200_OK)
+    except CV.DoesNotExist:
+        return Response({"error": "CV not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
 @api_view(['PUT'])
 def editCv(request):
     data = request.data
@@ -239,6 +293,7 @@ def editCv(request):
         if existing_cv and existing_cv.id != cv.id:
             return Response({"error": "A CV with this name already exists. Please change the CV name to another name."}, status=status.HTTP_400_BAD_REQUEST)
     # Update CV fields
+    cv.template=data.get('template')
     cv.cv_name = newCvName
     cv.first_name = data.get('firstName', cv.first_name)
     cv.last_name = data.get('lastName', cv.last_name)

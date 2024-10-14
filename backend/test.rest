@@ -17,6 +17,7 @@ Content-Type: application/json
 {
     "cvName": "third cv",
     "userId": 1,
+    "template":"cvtemp",
     "firstName":"ahmed",
     "lastName":"mohamed",
     "job": "driver engineer",
@@ -74,6 +75,10 @@ Content-Type: application/json
 
 
 ###
+Get http://127.0.0.1:8000/usercvs/1
+Content-Type: application/json
+
+###
 Get http://127.0.0.1:8000/cv/1
 Content-Type: application/json
 
@@ -105,6 +110,7 @@ Content-Type: application/json
     "cvId":1 ,
     "cvName": "first cv",
     "userId": 1,
+    "template":"cvtemp",
     "firstName": "zoz",
     "lastName": "mohamed",
     "job": "driver engineer",

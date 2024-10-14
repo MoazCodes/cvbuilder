@@ -29,6 +29,7 @@ class ExtracurricularActivity(models.Model):
 
 class CV(models.Model):
     cv_name = models.CharField(max_length=255)
+    template= models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
