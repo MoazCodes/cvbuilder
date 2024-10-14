@@ -155,5 +155,5 @@ body {
 }
 
 .form-control::placeholder {
-    color: white !important;
+    color: #b3b1b1 !important;
 }
