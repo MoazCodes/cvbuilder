@@ -15,7 +15,7 @@ POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cvName": "first cv",
+    "cvName": "third cv",
     "userId": 1,
     "firstName":"ahmed",
     "lastName":"mohamed",
@@ -76,6 +76,25 @@ Content-Type: application/json
 ###
 Get http://127.0.0.1:8000/cv/1
 Content-Type: application/json
+
+
+###
+DELETE http://127.0.0.1:8000/deletecv/
+Content-Type: application/json
+
+{
+    "userId":1,
+    "cvName":"first cv"
+}
+
+
+###
+DELETE http://127.0.0.1:8000/deleteallcvs/
+Content-Type: application/json
+
+{
+    "userId":1
+}
 
 
 ###

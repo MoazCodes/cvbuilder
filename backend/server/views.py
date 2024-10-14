@@ -296,3 +296,51 @@ def editCv(request):
         cv.extracurricular_activities.add(activity)
 
     return Response({"message": "CV updated successfully"}, status=status.HTTP_200_OK)
+
+
+@api_view(['delete'])
+def deletecv(request):
+    userId = request.data.get('userId')
+    cvName = request.data.get('cvName')
+
+    # Validate that both userId and cvName are provided
+    if not userId or not cvName:
+        return Response({"error": "User ID and CV name are required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        # Fetch the user
+        user = User.objects.get(id=userId)
+    except User.DoesNotExist:
+        return Response({"error": "User does not exist."}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        # Find the CV by user and name
+        cv = CV.objects.get(user=user, cv_name=cvName)
+    except CV.DoesNotExist:
+        return Response({"error": "CV not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    # Delete the CV
+    cv.delete()
+
+    return Response({"message": "CV deleted successfully."}, status=status.HTTP_200_OK)
+
+
+
+@api_view(['delete'])
+def deleteallcvs(request):
+    user_id=request.data.get('userId')
+    try:
+        # Fetch the user
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response({"error": "User does not exist."}, status=status.HTTP_404_NOT_FOUND)
+    
+    cvs = CV.objects.filter(user=user)
+    
+    if len(cvs) == 0 :
+        return Response({"error": "This user doesn't have any CV."}, status=status.HTTP_404_NOT_FOUND)
+
+    cvs.delete()
+
+    return Response({"message": "all CVs deleted successfully."}, status=status.HTTP_200_OK)
+
