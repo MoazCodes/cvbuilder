@@ -18,6 +18,8 @@ import Applications from "./Pages/Applications/Applications";
 import Jobs from "./Pages/Jobs/Jobs";
 import Footer from "./componenets/Footer";
 import NotFound from "./Pages/NotFound/NotFound";
+import MyCvs from "./Pages/MyCvs";
+import ProtectedRoute from "./componenets/ProtectedRoute/ProtectedRoute";
 
 function App() {
     useEffect(() => {
@@ -28,16 +30,52 @@ function App() {
     return (
         <>
             <Navbar />
-
+            {/* <MyCvs /> */}
             <Routes>
-                <Route path="" element={<Home />} />
+                <Route
+                    path=""
+                    element={
+                        <>
+                            <Home />
+                            <Footer />
+                        </>
+                    }
+                />
 
-                <Route path="/templates" element={<Templates />} />
+                <Route
+                    path="/templates"
+                    element={
+                        <ProtectedRoute>
+                            <Templates />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/jobs" element={<Jobs />} />
-                <Route path="/applications" element={<Applications />} />
-                <Route path="/templates/:id" element={<CvInputs />} />
+                <Route
+                    path="/jobs"
+                    element={
+                        <ProtectedRoute>
+                            <Jobs />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/applications"
+                    element={
+                        <ProtectedRoute>
+                            <Applications />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/templates/:id"
+                    element={
+                        <ProtectedRoute>
+                            <CvInputs />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             {/* <Footer /> */}

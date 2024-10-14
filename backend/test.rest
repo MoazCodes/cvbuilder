@@ -2,7 +2,7 @@
 POST http://127.0.0.1:8000/login/
 Content-Type: application/json
 
-{"email":"mo@gmail.com","password":"123"}
+{"email":"az@gmail.com","password":"123"}
 
 ###
 POST http://127.0.0.1:8000/signup/
@@ -15,7 +15,7 @@ POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cv_name":"fourth cv",
+    "cv_name":"fifth cv",
     "user_id": 1,
     "job": "driver engineer",
     "city": "giza",

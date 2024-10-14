@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Joi, { func } from "joi";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
 //error message from frontend and backend
 
@@ -12,6 +12,7 @@ type User = {
 };
 
 export default function Login() {
+    const navigate = useNavigate();
     const [user, setUser] = useState<User>({
         email: "",
         password: "",
@@ -74,7 +75,7 @@ export default function Login() {
                 let token: string;
                 token = res?.data?.token;
                 localStorage.setItem("token", token);
-
+                navigate("/");
                 clearInputs();
             })
             .catch((e) => {
