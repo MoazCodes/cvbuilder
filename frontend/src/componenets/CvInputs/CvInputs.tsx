@@ -12,6 +12,7 @@ import axios from "axios";
 import Cv2 from "../Cv2";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import Cv3 from "../../Cv3";
 
 type CvInputsProps = {
     isEditing:boolean;
@@ -20,7 +21,9 @@ type CvInputsProps = {
 
 const CvInputs = ({isEditing}:CvInputsProps) => {
 
-    const {templateId,userId,cvId} = useParams();
+    const { templateId, userId, cvId } = useParams<{ templateId?: string; userId?: string; cvId?: string }>();
+
+    
     const [goSteps, setGoSteps] = useState(0);
     const [activity, setActivity] = useState("");
     const [skill, setSkill] = useState("");
@@ -64,6 +67,20 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
         experiences: [] as Experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
         extraCurricularActivities: [] as string[]
     });
+
+
+    const renderTemplate = () => {
+        switch (templateId) {
+            case "1":
+                return <Cv cv={formData} isEditableTemplate={false} />;
+            case "2":
+                return <Cv2 cv={formData} isEditableTemplate={false} />;
+            case "3":
+                return <Cv3 cv={formData} isEditableTemplate={false} />;
+            default:
+                return null;
+        }
+      };
 
     useEffect(()=>{
         if(isEditing){
@@ -1020,7 +1037,8 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>}
+                            {/* {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>} */}
+                            {renderTemplate()}
                             
                         </div>
                     </div>
