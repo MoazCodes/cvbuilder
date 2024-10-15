@@ -16,6 +16,7 @@ import { UserContext } from "../../Context/UserContext";
 type CvInputsProps = {
     isEditing:boolean;
 }
+import Cv3 from "../../Cv3";
 
 const CvInputs = ({isEditing}:CvInputsProps) => {
 
@@ -1020,11 +1021,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             style={{ minHeight: "428px" }}
                         >
                             
-                            {templateId=="1"?
                             <Cv cv={formData} isEditableTemplate={false}/>
-                            :templateId=="2"?
-                            <Cv2 cv={formData} isEditableTemplate={false}/>
-                            :<></>}
                         </div>
                     </div>
                 </div>

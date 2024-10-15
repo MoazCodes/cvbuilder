@@ -19,7 +19,7 @@ const MyCvs = () => {
                 } 
             })
             .then((res) => {
-                console.log("res" + res)
+                console.log("res" ,res)
                 setUserCvs([]);
             })
             .catch((error) => {

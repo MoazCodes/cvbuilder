@@ -272,7 +272,8 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
         }
     }, [getCvsErrors]);
     const saveCvToDatabase = () => {
-        if(!getCvsErrors){axios
+        if(!getCvsErrors){
+            axios
             .post(`http://localhost:8000/addcv/`, cv)
             .then((res) => {
                 
