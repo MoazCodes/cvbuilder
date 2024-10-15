@@ -16,7 +16,7 @@ import { UserContext } from "../../Context/UserContext";
 type CvInputsProps = {
     isEditing:boolean;
 }
-import Cv3 from "../../Cv3";
+
 
 const CvInputs = ({isEditing}:CvInputsProps) => {
 
