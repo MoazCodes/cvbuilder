@@ -8,8 +8,8 @@ import ReactPDF, {
     View,
     Link as PdfLink,
 } from "@react-pdf/renderer";
-import React, { useContext, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import { Experience, Project } from "../../Interfaces/CvInterfaces";
 import { CvModel } from "../../Interfaces/CvInterfaces";
 import { isEditable } from "@testing-library/user-event/dist/utils";
@@ -255,14 +255,19 @@ const styles = StyleSheet.create({
 });
 
 const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
+    let location = useLocation();
+    const navigate = useNavigate();
     const {setUserCvs,userCvs,getCvsErrors,setGetCvsErrors} = useContext(UserContext);
+    const [isDownloaded, setIsDownloaded] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+
     useEffect(() => {
         if (getCvsErrors) {
             const timer = setTimeout(() => {
-                setGetCvsErrors(!getCvsErrors); // Hide the error after 3 seconds
+                setGetCvsErrors(null); // Clear the error after 3 seconds
             }, 3000);
 
-            // Clear the timeout if the component unmounts or error changes
+            navigate('/mycvs');
             return () => clearTimeout(timer);
         }
     }, [getCvsErrors]);
@@ -286,9 +291,42 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
         
             
     };
+
+    const editCv = ()=>{
+        axios
+            .put(`http://127.0.0.1:8000/editcv/`,cv)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+                
+                console.log(error)
+            });
+    }
+
+    const handleDownloadClick = () => {
+        if (location.pathname.includes("edit")) {
+            editCv();
+        } else {
+            saveCvToDatabase();
+        }
+        setIsDownloaded(true); // Set downloaded state to true
+        setShowSuccess(true); // Show success alert
+    };
+
+    useEffect(() => {
+        if (showSuccess) {
+            const timer = setTimeout(() => {
+                setShowSuccess(false); // Hide success alert after 3 seconds
+                navigate('/mycvs');
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showSuccess]);
     return (
         <>
-            <div className="container bg-light" style={{minHeight: "300px"}}>
+            <div className="container bg-light overflow-hidden" style={{minHeight: "550px",maxHeight:"550px"}}>
                 <div className="row">
                     <div className="col-12">
                         <div className="personalDetails text-center mt-1 text-black">
@@ -445,7 +483,7 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                                                 .split("\n")
                                                 .map((line, index) => (
                                                     <span key={index}>
-                                                        {`• ` + line}
+                                                        {`•` + line}
                                                         <br />
                                                     </span>
                                                 ))}
@@ -491,8 +529,9 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                         fileName={`${cv.cvName}.pdf`}
                         className="position-absolute  start-50 translate-middle-x"
                         style={{ bottom: "-50px" }}
-                        onClick={saveCvToDatabase}
+                        onClick={handleDownloadClick}
                     >
+                        
                         <button className="btn btn-success">Download</button>
                     </PDFDownloadLink>
                 )}
@@ -503,10 +542,24 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                         
                         <strong className="me-auto">Can't save to our database</strong>
                         <small>Now</small>
-                        <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        
                     </div>
                     <div className="toast-body">
                         {getCvsErrors}
+                    </div>
+                </div>
+            </div>)}
+
+            {showSuccess&& (<div className="alert alert-success position-fixed  p-3" style={{bottom:"10px",right:"10px"}}>
+                <div >
+                    <div className="toast-header">
+                        
+                        <strong className="me-auto">Congratulations</strong>
+                        <small>Now</small>
+                        
+                    </div>
+                    <div className="toast-body">
+                        {"downloaded Succesfully"}
                     </div>
                 </div>
             </div>)}

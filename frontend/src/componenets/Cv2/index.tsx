@@ -1,14 +1,146 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CvModel } from '../../Interfaces/CvInterfaces';
 import './Cv2.css';
+import { Document, Page, PDFDownloadLink, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { fontWeight } from 'html2canvas/dist/types/css/property-descriptors/font-weight';
+import { UserContext } from '../../Context/UserContext';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 interface CvProps {
     cv: CvModel;
+    isEditableTemplate: boolean;
 }
 
-const Cv2: React.FC<CvProps> = ({ cv }) => {
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+    },
+    header: {
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: -5,
+    },
+    subtitle: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    section: {
+        marginBottom: 15,
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 5,
+    },
+    sectionContent: {
+        marginBottom: 5,
+    },
+    listItem: {
+        fontSize: 12,
+        color: '#666',
+    },
+    experienceTitle: {
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    experienceCompany: {
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
+    fontWeight600:{
+        fontWeight:'bold'
+    } 
+});
+
+export const Pdf2 = ({ cv }:CvProps) => {
     return (
-        <div className="container cv-container mt-5 p-4">
+        <Document>
+            <Page size="A4" style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.title}>{cv.firstName} {cv.lastName}</Text>
+                    <Text style={styles.subtitle}>
+                        <Text style={ styles.fontWeight600 }>{cv.job}</Text> {cv.objective}
+                    </Text>
+                    <Text>{cv.userId} | {cv.email}</Text>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Experience</Text>
+                    {cv.experiences.map((experience, index) => (
+                        <View key={index} style={styles.sectionContent}>
+                            <Text style={styles.experienceTitle}>
+                                {experience.jobTitle} - {experience.startJobDate} to {experience.endJobDate}
+                            </Text>
+                            <Text style={styles.experienceCompany}>{experience.company}</Text>
+                            <Text style={styles.listItem}>{experience.jobDescription}</Text>
+                        </View>
+                    ))}
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Skills</Text>
+                    {cv.skills.map((skill, index) => (
+                        <Text style={styles.listItem} key={index}>
+                            • {skill}
+                        </Text>
+                    ))}
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Education</Text>
+                    <Text style={styles.listItem}>{cv.degree} - {cv.school}</Text>
+                    <Text style={styles.listItem}>{cv.schoolDepartment}, {cv.schoolCity}, {cv.schoolCountry}</Text>
+                    <Text style={styles.listItem}>{cv.startSchoolDate} - {cv.endSchoolDate}</Text>
+                </View>
+            </Page>
+        </Document>
+    );
+};
+
+
+const Cv2: React.FC<CvProps> = ({ cv ,isEditableTemplate}) => {
+    let location = useLocation();
+    const saveCvToDatabase = () => {
+        if(!getCvsErrors){axios
+            .post(`http://localhost:8000/addcv/`, cv)
+            .then((res) => {
+                
+                console.log(res);
+                setUserCvs({
+                    ...userCvs, 
+                    data: [...(userCvs.data), cv] 
+                });
+            })
+            .catch((error) => {
+                setGetCvsErrors(error.response.data.error);
+                console.log(error.response.data.error);
+                console.log(error);
+                
+            });}
+        
+            
+    };
+
+    const editCv = ()=>{
+        axios
+            .put(`http://127.0.0.1:8000/editcv/`,cv)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+                
+                console.log(error)
+            });
+    }
+    const {setUserCvs,userCvs,getCvsErrors,setGetCvsErrors} = useContext(UserContext);
+    return (
+        <div className="container cv-container  p-1 overflow-hidden" style={{minHeight: "550px",maxHeight:"550px"}}>
             <div className="text-center">
                 <div className="text-dark mb-n5 text0" style={{ zIndex: 1 }}>
                     <h1>
@@ -66,6 +198,17 @@ const Cv2: React.FC<CvProps> = ({ cv }) => {
                     </div>
                 </div>
             </div>
+            {!isEditableTemplate&&(<PDFDownloadLink
+                        document={<Pdf2 cv={cv} isEditableTemplate={false} />}
+                        fileName={`${cv.cvName}.pdf`}
+                        className="position-absolute  start-50 translate-middle-x"
+                        style={{ bottom: "-50px" }}
+                        onClick={()=>{location.pathname.includes("edit")?editCv():saveCvToDatabase()}}
+                    >
+                        <button className="btn btn-success">Download</button>
+            </PDFDownloadLink>)
+            }
+            
         </div>
     );
 };

@@ -21,6 +21,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 import MyCvs from "./Pages/MyCvs";
 import ProtectedRoute from "./componenets/ProtectedRoute/ProtectedRoute";
 import UserProvider from "./Context/UserContext";
+import Cv2 from "./componenets/Cv2";
 
 function App() {
     useEffect(() => {
@@ -32,7 +33,6 @@ function App() {
         <>
             <UserProvider>
                 <Navbar />
-                <MyCvs />
                 <Routes>
                     <Route
                         path=""
@@ -63,6 +63,14 @@ function App() {
                         }
                     />
                     <Route
+                        path="/mycvs"
+                        element={
+                            <ProtectedRoute>
+                                <MyCvs/>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
                         path="/applications"
                         element={
                             <ProtectedRoute>
@@ -71,10 +79,18 @@ function App() {
                         }
                     />
                     <Route
-                        path="/templates/:id"
+                        path="/templates/:templateId/:userId/:cvId/edit"
                         element={
                             <ProtectedRoute>
-                                <CvInputs />
+                                <CvInputs isEditing={true}/>
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/templates/:templateId/:userId"
+                        element={
+                            <ProtectedRoute>
+                                <CvInputs isEditing={false}/>
                             </ProtectedRoute>
                         }
                     />

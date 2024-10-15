@@ -29,6 +29,11 @@ const Footer = () => {
                                 </Link>
                             </p>
                             <p>
+                                <Link to="/mycvs" className="text-reset">
+                                    My-Cvs
+                                </Link>
+                            </p>
+                            <p>
                                 <Link to="/jobs" className="text-reset">
                                     Jobs
                                 </Link>

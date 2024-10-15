@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Step, Stepper } from "react-form-stepper";
 import Skill from "../Skill/Skill";
 import "./styles.css";
@@ -7,10 +7,19 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import ExtraCurricularActivity from "../extracurricularActivities";
 import Cv from "../CV";
 import StepperLevel from "../stepperLevels";
-import { Experience, Project } from "../../Interfaces/CvInterfaces";
+import { CvModel, Experience, Project } from "../../Interfaces/CvInterfaces";
 import axios from "axios";
+import Cv2 from "../Cv2";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
-const CvInputs = () => {
+type CvInputsProps = {
+    isEditing:boolean;
+}
+
+const CvInputs = ({isEditing}:CvInputsProps) => {
+
+    const {templateId,userId,cvId} = useParams();
     const [goSteps, setGoSteps] = useState(0);
     const [activity, setActivity] = useState("");
     const [skill, setSkill] = useState("");
@@ -30,10 +39,11 @@ const CvInputs = () => {
         company: "",
     });
 
-    const [formData, setFormData] = useState({
-        userId: 1,
-        cvId:1,
-        cvName:"aaa",
+    const [formData, setFormData] = useState<CvModel>({
+        userId: Number(userId),
+        cvId:Number(cvId),
+        template:templateId,
+        cvName:"",
         firstName: "",
         lastName: "",
         job: "",
@@ -53,6 +63,25 @@ const CvInputs = () => {
         experiences: [] as Experience[], //experience={ jobTitle: string ,startJobDate: string ,endJobDate: string ,jobDescription: string,company: string,}
         extraCurricularActivities: [] as string[]
     });
+
+    useEffect(()=>{
+        if(isEditing){
+            axios
+            .get(`http://127.0.0.1:8000/cv/${cvId}`)
+            .then((res) => {
+                
+                setFormData(res.data.data)
+                
+            })
+            .catch((error) => {
+                
+                console.log(error)
+            });
+        }
+        
+    }, [cvId])
+    
+
 
     
 
@@ -266,6 +295,7 @@ const CvInputs = () => {
                                                     placeholder="AhmedCv_1"
                                                     onChange={handleInput}
                                                     name="cvName"
+                                                    value={formData.cvName}
                                                 />
                                             </div>
                                         </div>
@@ -284,6 +314,7 @@ const CvInputs = () => {
                                                     placeholder="Ahmed"
                                                     onChange={handleInput}
                                                     name="firstName"
+                                                    value={formData.firstName}
                                                 />
                                             </div>
                                         </div>
@@ -303,6 +334,7 @@ const CvInputs = () => {
                                                     placeholder="Khaled"
                                                     name="lastName"
                                                     onChange={handleInput}
+                                                    value={formData.lastName}
                                                 />
                                             </div>
                                         </div>
@@ -322,6 +354,7 @@ const CvInputs = () => {
                                                     placeholder="web developer"
                                                     name="job"
                                                     onChange={handleInput}
+                                                    value={formData.job}
                                                 />
                                             </div>
                                         </div>
@@ -341,6 +374,7 @@ const CvInputs = () => {
                                                     placeholder="Giza"
                                                     name="city"
                                                     onChange={handleInput}
+                                                    value={formData.city}
                                                 />
                                             </div>
                                         </div>
@@ -360,6 +394,7 @@ const CvInputs = () => {
                                                     placeholder="Egypt"
                                                     name="country"
                                                     onChange={handleInput}
+                                                    value={formData.country}
                                                 />
                                             </div>
                                         </div>
@@ -379,6 +414,7 @@ const CvInputs = () => {
                                                     placeholder="example@abc.com"
                                                     name="email"
                                                     onChange={handleInput}
+                                                    value={formData.email}
                                                 />
                                             </div>
                                         </div>
@@ -405,6 +441,7 @@ const CvInputs = () => {
                                         id="objective"
                                         name="objective"
                                         onChange={handleInput}
+                                        value={formData.objective}
                                     ></textarea>
                                     <StepperLevel
                                         currentLevel={goSteps}
@@ -431,6 +468,7 @@ const CvInputs = () => {
                                                     placeholder="Helwan University"
                                                     name="school"
                                                     onChange={handleInput}
+                                                    value={formData.school}
                                                 />
                                             </div>
                                         </div>
@@ -449,6 +487,7 @@ const CvInputs = () => {
                                                     placeholder="Faculty of Science"
                                                     name="degree"
                                                     onChange={handleInput}
+                                                    value={formData.degree}
                                                 />
                                             </div>
                                         </div>
@@ -467,6 +506,7 @@ const CvInputs = () => {
                                                     placeholder="AI"
                                                     name="schoolDepartment"
                                                     onChange={handleInput}
+                                                    value={formData.schoolDepartment}
                                                 />
                                             </div>
                                         </div>
@@ -485,6 +525,7 @@ const CvInputs = () => {
                                                     placeholder="Giza"
                                                     name="schoolCity"
                                                     onChange={handleInput}
+                                                    value={formData.schoolCity}
                                                 />
                                             </div>
                                         </div>
@@ -503,6 +544,7 @@ const CvInputs = () => {
                                                     placeholder="Egypt"
                                                     name="schoolCountry"
                                                     onChange={handleInput}
+                                                    value={formData.schoolCountry}
                                                 />
                                             </div>
                                         </div>
@@ -516,12 +558,13 @@ const CvInputs = () => {
                                                     Start Date
                                                 </label>
                                                 <input
-                                                    type="date"
+                                                    type="month"
                                                     className="form-control"
                                                     id="startSchoolDate"
                                                     placeholder="September"
                                                     name="startSchoolDate"
                                                     onChange={handleInput}
+                                                    value={formData.startSchoolDate}
                                                 />
                                             </div>
                                         </div>
@@ -535,11 +578,12 @@ const CvInputs = () => {
                                                     End Date
                                                 </label>
                                                 <input
-                                                    type="date"
+                                                    type="month"
                                                     className="form-control"
                                                     id="endSchoolDate"
                                                     name="endSchoolDate"
                                                     onChange={handleInput}
+                                                    value={formData.endSchoolDate}
                                                 />
                                             </div>
                                         </div>
@@ -595,7 +639,7 @@ const CvInputs = () => {
                             )}
 
                             {goSteps === 4 && (
-                                <div className="container-fluid">
+                                <div className="container-fluid text-break">
                                     <div className="row h-100">
                                         {projectAddition === true ? (
                                             <>
@@ -627,7 +671,7 @@ const CvInputs = () => {
                                                             Project Date
                                                         </label>
                                                         <input
-                                                            type="date"
+                                                            type="month"
                                                             className="form-control"
                                                             name="projectDate"
                                                             onChange={
@@ -976,7 +1020,11 @@ const CvInputs = () => {
                             style={{ minHeight: "428px" }}
                         >
                             
+                            {templateId=="1"?
                             <Cv cv={formData} isEditableTemplate={false}/>
+                            :templateId=="2"?
+                            <Cv2 cv={formData} isEditableTemplate={false}/>
+                            :<></>}
                         </div>
                     </div>
                 </div>

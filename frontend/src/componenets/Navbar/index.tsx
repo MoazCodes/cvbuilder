@@ -62,12 +62,17 @@ const Navbar = () => {
                                     </Link>
                                 </>
                             ) : (
+                                <>
+                                <Link className="nav-link mx-2" to={"mycvs"}>
+                                    My-Cvs
+                                </Link>
                                 <button
                                     className="btn btn-outline-danger"
                                     onClick={logout}
                                 >
                                     Logout
                                 </button>
+                                </>
                             )}
                         </div>
                     </div>

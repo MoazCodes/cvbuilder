@@ -31,7 +31,7 @@ const UserProvider = (props: UserProviderProps) => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState<User | null>(null);
     const [userCvs, setUserCvs] = useState<UserCvs>({ data: [] });
-    const [getCvsErrors ,setGetCvsErrors]= useState();
+    const [getCvsErrors ,setGetCvsErrors]= useState("");
     const saveUserData = ()=>{
         const encodedData = localStorage.getItem("token");
         let decodedData:tokenData;
@@ -41,8 +41,10 @@ const UserProvider = (props: UserProviderProps) => {
             console.log(decodedData)
             console.log(decodedData.user)
         }
-        
-        
+    }
+
+    const getUserId = ()=>{
+        return userData?.id;
     }
 
     function logout() {
@@ -58,9 +60,9 @@ const UserProvider = (props: UserProviderProps) => {
     },[])
 
     useEffect(() => {
-        console.log("asdasd", userData?.id)
+        console.log("asdasd", getUserId())
         axios
-            .get(`http://localhost:8000/cv/${userData?.id}`)
+            .get(`http://127.0.0.1:8000/usercvs/${getUserId()}`)
             .then((res) => {
                 console.log(res);
                 setUserCvs(res.data);
@@ -73,7 +75,7 @@ const UserProvider = (props: UserProviderProps) => {
     }, [userData]);
     
     return (
-        <UserContext.Provider value={{ userData,userCvs,setUserCvs,getCvsErrors,setGetCvsErrors,saveUserData,setUserData,logout}}>
+        <UserContext.Provider value={{ userData,userCvs,setUserCvs,getCvsErrors,setGetCvsErrors,saveUserData,setUserData,logout,getUserId}}>
             {props.children}
         </UserContext.Provider>
     );

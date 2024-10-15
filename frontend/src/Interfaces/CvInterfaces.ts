@@ -13,6 +13,7 @@ export interface Experience {
 }
 
 export interface CvModel {
+    template:string|undefined;
     cvName:string;
     cvId:number;
     userId: number;

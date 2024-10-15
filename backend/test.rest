@@ -15,9 +15,9 @@ POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cvName": "shshf cv",
+    "cvName": "shshf2322 cv",
     "userId": 1,
-    "template":"cvtemp",
+    "template":"2",
     "firstName":"ahmed",
     "lastName":"mohamed",
     "job": "driver engineer",
@@ -79,7 +79,7 @@ Get http://127.0.0.1:8000/usercvs/1
 Content-Type: application/json
 
 ###
-Get http://127.0.0.1:8000/cv/1
+Get http://127.0.0.1:8000/cv/34
 Content-Type: application/json
 
 
