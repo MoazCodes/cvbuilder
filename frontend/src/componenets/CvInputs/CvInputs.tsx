@@ -15,15 +15,15 @@ import { UserContext } from "../../Context/UserContext";
 import Cv3 from "../../Cv3";
 
 type CvInputsProps = {
-    isEditing:boolean;
+    isEditing: boolean;
 }
 
 
-const CvInputs = ({isEditing}:CvInputsProps) => {
+const CvInputs = ({ isEditing }: CvInputsProps) => {
 
     const { templateId, userId, cvId } = useParams<{ templateId?: string; userId?: string; cvId?: string }>();
 
-    
+
     const [goSteps, setGoSteps] = useState(0);
     const [activity, setActivity] = useState("");
     const [skill, setSkill] = useState("");
@@ -45,9 +45,9 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
 
     const [formData, setFormData] = useState<CvModel>({
         userId: Number(userId),
-        cvId:Number(cvId),
-        template:templateId,
-        cvName:"",
+        cvId: Number(cvId),
+        template: templateId,
+        cvName: "",
         firstName: "",
         lastName: "",
         job: "",
@@ -80,28 +80,28 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
             default:
                 return null;
         }
-      };
+    };
 
-    useEffect(()=>{
-        if(isEditing){
+    useEffect(() => {
+        if (isEditing) {
             axios
-            .get(`http://127.0.0.1:8000/cv/${cvId}`)
-            .then((res) => {
-                
-                setFormData(res.data.data)
-                
-            })
-            .catch((error) => {
-                
-                console.log(error)
-            });
+                .get(`http://127.0.0.1:8000/cv/${cvId}`)
+                .then((res) => {
+
+                    setFormData(res.data.data)
+
+                })
+                .catch((error) => {
+
+                    console.log(error)
+                });
         }
-        
+
     }, [cvId])
-    
 
 
-    
+
+
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
@@ -225,7 +225,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
         });
     };
 
-    useEffect(() => {}, [formData]);
+    useEffect(() => { }, [formData]);
     return (
         <>
             <div className="pt-5 mt-5  container  vh-100">
@@ -298,7 +298,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             {goSteps === 0 && (
                                 <div className="container-fluid">
                                     <div className="row">
-                                    <div className="col-md-12">
+                                        <div className="col-md-12">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="cvName"
@@ -914,7 +914,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                                                 </>
                                             ) : (
                                                 formData.experiences.length >
-                                                    0 && (
+                                                0 && (
                                                     <>
                                                         {formData.experiences.map(
                                                             (
@@ -1039,7 +1039,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                         >
                             {/* {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>} */}
                             {renderTemplate()}
-                            
+
                         </div>
                     </div>
                 </div>

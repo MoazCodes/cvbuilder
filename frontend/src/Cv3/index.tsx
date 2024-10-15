@@ -1,18 +1,288 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CvModel } from '../Interfaces/CvInterfaces';
 import { UserContext } from '../Context/UserContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Document, Page, PDFDownloadLink, StyleSheet, Text, View, Link as PdfLink } from '@react-pdf/renderer';
+import axios from 'axios';
 
 interface CvProps {
     cv: CvModel;
     isEditableTemplate: boolean;
 }
 
+const txtcol: string = "#03A696";
+
+
+const styles = StyleSheet.create({
+    page: {
+        padding: 30,
+        fontSize: "16px", // Change from 8pt to 16px for better visibility
+    },
+    container: {
+        width: "100%",
+    },
+    personalDetails: {
+        marginBottom: 10,
+    },
+    name: {
+        fontWeight: "bold",
+        fontSize: "24px", // Adjust font size to match web standards
+        color: txtcol, // Ensure this variable is defined
+    },
+    jobTitle: {
+        fontSize: "18px",
+        marginTop: 5,
+    },
+    details: {
+        fontSize: "16px",
+        marginTop: 5,
+    },
+    link: {
+        color: "blue",
+        textDecoration: "none",
+    },
+    section: {
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    title: {
+        fontSize: "18px",
+        fontWeight: "bold",
+        color: txtcol,
+    },
+    content: {
+        fontSize: "16px", // Larger font size for section content
+        marginTop: 5,
+    },
+    educationDetails: {
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        fontSize: "16px",
+    },
+    schoolName: {
+        fontSize: "16px",
+        fontWeight: "bold",
+    },
+    projectHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        fontWeight: "bold",
+        fontSize: "16px",
+        color: "#183ccc",
+    },
+    description: {
+        fontSize: "14px",
+        marginTop: 5,
+    },
+    borderBottom: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#ececec",
+        borderBottomStyle: "solid",
+    },
+
+    line: {
+        borderBottomWidth: 5,
+        borderBottomColor: "#ececec",  // Color of the line
+        marginTop: 5,                  // Space above the line
+        marginBottom: 10,              // Space below the line
+    },
+    indent: {
+        paddingLeft: 16,
+    },
+    flexbetween: {
+        display: "flex",
+        flexDirection: "row", // Ensures items are in a row
+        justifyContent: "space-between", // Distributes space between child components
+        alignItems: "center", // Centers items vertically
+    }
+});
+
+
+// Pdf document
+const Pdf = ({ cv }: CvProps) => {
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.container}>
+                    {/* Personal Details Section */}
+                    <View style={styles.personalDetails}>
+                        <Text style={styles.name}>
+                            {cv.firstName + " " + cv.lastName}
+                        </Text>
+                        <View style={styles.flexbetween}>
+                            <Text style={styles.jobTitle}>{cv.job}</Text>
+                            <Text style={styles.details}>
+                                {cv.city}, {cv.country}
+                                {cv.email && " | "}
+                                {cv.email && (
+                                    <PdfLink
+                                        src={`mailto:${cv.email}`}
+                                        style={styles.link}
+                                    >
+                                        Email
+                                    </PdfLink>
+                                )}
+                            </Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.line}></View>
+
+                    {/* Objective Section */}
+                    {cv.objective && (
+                        <View style={styles.section}>
+                            <Text style={[styles.title,]}>
+                                Objective
+                            </Text>
+                            <Text style={styles.content}>{cv.objective}</Text>
+                        </View>
+                    )}
+                    <View style={styles.line}></View>
+
+
+                    {/* Education Section */}
+                    {cv.school && (
+                        <View style={styles.section}>
+                            <Text style={[styles.title,]}>
+                                Education
+                            </Text>
+                            <View style={styles.educationDetails}>
+                                <Text style={styles.schoolName}>
+                                    {cv.school}, {cv.schoolCity}, {cv.schoolCountry}
+                                </Text>
+                                <Text>
+                                    {cv.endSchoolDate
+                                        ? `${cv.startSchoolDate.substring(0, 7)} / ${cv.endSchoolDate.substring(0, 7)}`
+                                        : cv.startSchoolDate.substring(0, 7)}
+                                </Text>
+                            </View>
+                            <Text style={styles.content}>
+                                Studied{" "}
+                                <Text >{cv.schoolDepartment}</Text> at{" "}
+                                <Text >{cv.degree}</Text>
+                            </Text>
+                        </View>
+                    )}
+                    <View style={styles.line}></View>
+
+
+                    {/* Skills Section */}
+                    {cv.skills.length !== 0 && (
+                        <View style={styles.section}>
+                            <Text style={[styles.title,]}>
+                                Skills
+                            </Text>
+                            <Text style={styles.content}>
+                                {cv.skills.join(" , ")}
+                            </Text>
+                        </View>
+                    )}
+
+                    <View style={styles.line}></View>
+
+
+                    {/* Projects Section */}
+                    {cv.projects.length !== 0 && (
+                        <View style={styles.section}>
+                            <Text style={[styles.title,]}>
+                                Projects
+                            </Text>
+                            {cv.projects.map((project, index) => (
+                                <View key={index}>
+                                    <View style={styles.projectHeader}>
+                                        <Text>{project.projectName}</Text>
+                                        <Text>{project.projectDate}</Text>
+                                    </View>
+                                    <View style={styles.description}>
+                                        {project.projectDetails.split("\n").map((line, idx) => (
+                                            <Text key={idx}>
+                                                • {line}
+                                            </Text>
+                                        ))}
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    )}
+
+                    <View style={styles.line}></View>
+
+
+                    {/* Extracurricular Activities Section */}
+                    {cv.extraCurricularActivities.length !== 0 && (
+                        <View style={styles.section}>
+                            <Text style={[styles.title,]}>
+                                Extracurricular Activities
+                            </Text>
+                            <View style={styles.content}>
+                                {cv.extraCurricularActivities.map((activity, index) => (
+                                    <Text key={index}>{activity}</Text>
+                                ))}
+                            </View>
+                        </View>
+                    )}
+                </View>
+            </Page>
+        </Document>
+    );
+};
+
+
 export default function Cv3({ cv, isEditableTemplate }: CvProps) {
     const { setUserCvs, userCvs, getCvsErrors, setGetCvsErrors } = useContext(UserContext);
-    const txtcol: string = "#03A696";
+    const [isDownloaded, setIsDownloaded] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    let location = useLocation();
+
+
+    const saveCvToDatabase = () => {
+        if (!getCvsErrors) {
+            axios
+                .post(`http://localhost:8000/addcv/`, cv)
+                .then((res) => {
+
+                    console.log(res);
+                    setUserCvs({
+                        ...userCvs,
+                        data: [...(userCvs.data), cv]
+                    });
+                })
+                .catch((error) => {
+                    setGetCvsErrors(error.response.data.error);
+                    console.log(error.response.data.error);
+                    console.log(error);
+
+                });
+        }
+
+
+    };
+
+    const editCv = () => {
+        axios
+            .put(`http://127.0.0.1:8000/editcv/`, cv)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+
+                console.log(error)
+            });
+    }
+
+    const handleDownloadClick = () => {
+        if (location.pathname.includes("edit")) {
+            editCv();
+        } else {
+            saveCvToDatabase();
+        }
+        setIsDownloaded(true); // Set downloaded state to true
+        setShowSuccess(true); // Show success alert
+    };
 
     return (
         <>
@@ -140,7 +410,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                                     </div>
                                 ))}
                             </div>
-                            <hr className='my-1'/>
+                            <hr className='my-1' />
                         </div>
                     )}
 
@@ -160,6 +430,19 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                                 </div>
                             </div>
                         </div>
+                    )}
+
+                    {!isEditableTemplate && (
+                        <PDFDownloadLink
+                            document={<Pdf cv={cv} isEditableTemplate={false} />}
+                            fileName={`${cv.cvName}.pdf`}
+                            className="position-absolute  start-50 translate-middle-x"
+                            style={{ bottom: "-50px" }}
+                            onClick={handleDownloadClick}
+                        >
+
+                            <button className="btn btn-success">Download</button>
+                        </PDFDownloadLink>
                     )}
                 </div>
             </div>
