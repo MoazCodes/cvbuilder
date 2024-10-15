@@ -32,7 +32,7 @@ function App() {
         <>
             <UserProvider>
                 <Navbar />
-                <MyCvs />
+                {/* <MyCvs /> */}
                 <Routes>
                     <Route
                         path=""

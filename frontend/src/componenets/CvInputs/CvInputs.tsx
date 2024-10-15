@@ -9,6 +9,7 @@ import Cv from "../CV";
 import StepperLevel from "../stepperLevels";
 import { Experience, Project } from "../../Interfaces/CvInterfaces";
 import axios from "axios";
+import Cv3 from "../../Cv3";
 
 const CvInputs = () => {
     const [goSteps, setGoSteps] = useState(0);
@@ -975,8 +976,10 @@ const CvInputs = () => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            
-                            <Cv cv={formData} isEditableTemplate={false}/>
+                            {/* ahmed khaled cv */}
+                            {/* <Cv cv={formData} isEditableTemplate={false}/> */}
+                            {/* moaz cv  */}
+                            <Cv3 cv={formData} isEditableTemplate={false} />
                         </div>
                     </div>
                 </div>
