@@ -13,7 +13,7 @@ export default function ApplicationsList({
     const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
 
     return (
-        <div className="col-4 min-vh-70   max-vh-70 overflow-hidden">
+        <div className="col-md-4 col-sm-12 min-vh-70   max-vh-70 overflow-hidden">
             <div className="row justify-between ">
                 <div className="col position-relative">
                     <h2>{title}</h2>

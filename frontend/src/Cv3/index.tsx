@@ -128,24 +128,27 @@ const Pdf = ({ cv }: CvProps) => {
                                 )}
                             </Text>
                         </View>
+                        
                     </View>
 
                     <View style={styles.line}></View>
 
                     {/* Objective Section */}
-                    {cv.objective && (
+                    {cv.objective && (<>
                         <View style={styles.section}>
                             <Text style={[styles.title,]}>
                                 Objective
                             </Text>
                             <Text style={styles.content}>{cv.objective}</Text>
                         </View>
+                        <View style={styles.line}></View>
+                        </>
                     )}
-                    <View style={styles.line}></View>
+                    
 
 
                     {/* Education Section */}
-                    {cv.school && (
+                    {cv.school && (<>
                         <View style={styles.section}>
                             <Text style={[styles.title,]}>
                                 Education
@@ -166,13 +169,15 @@ const Pdf = ({ cv }: CvProps) => {
                                 <Text >{cv.degree}</Text>
                             </Text>
                         </View>
+                        <View style={styles.line}></View>
+                        </>
                     )}
-                    <View style={styles.line}></View>
+                    
 
 
                     {/* Skills Section */}
-                    {cv.skills.length !== 0 && (
-                        <View style={styles.section}>
+                    {cv.skills.length !== 0 && (<>
+                    <View style={styles.section}>
                             <Text style={[styles.title,]}>
                                 Skills
                             </Text>
@@ -180,13 +185,16 @@ const Pdf = ({ cv }: CvProps) => {
                                 {cv.skills.join(" , ")}
                             </Text>
                         </View>
+                        <View style={styles.line}></View>
+                    </>
+                        
                     )}
 
-                    <View style={styles.line}></View>
+                    
 
 
                     {/* Projects Section */}
-                    {cv.projects.length !== 0 && (
+                    {cv.projects.length !== 0 && (<>
                         <View style={styles.section}>
                             <Text style={[styles.title,]}>
                                 Projects
@@ -206,11 +214,43 @@ const Pdf = ({ cv }: CvProps) => {
                                     </View>
                                 </View>
                             ))}
+                            <View style={styles.line}></View>
                         </View>
+                        </>
                     )}
 
-                    <View style={styles.line}></View>
+                    
 
+                    {/* Work Section */}
+                    {cv?.experiences?.length !== 0 && (<>
+                <View style={styles.section}>
+                    <Text style={styles.title}>
+                        Work Experience
+                    </Text>
+                    {cv.experiences.map((experience, index) => (
+                        <View key={index} style={styles.section}>
+                            <View style={styles.flexbetween}>
+                                <Text>{experience.jobTitle}</Text>
+                                <Text>{experience.company}</Text>
+                            </View>
+                            <View style={styles.flexbetween}>
+                                <Text>{experience.startJobDate}</Text>
+                                <Text>{experience.endJobDate}</Text>
+                            </View>
+                            <View style={styles.indent}>
+                                {experience.jobDescription.split(/(?<=[.!?])\n/).map((line, idx) => (
+                                    line && <Text key={idx} style={styles.description}>• {line}</Text>
+                                ))}
+                            </View>
+                        </View>
+                    ))}
+                </View>
+                <View style={styles.line}></View>
+                </>
+            )}
+
+                    
+                    
 
                     {/* Extracurricular Activities Section */}
                     {cv.extraCurricularActivities.length !== 0 && (
@@ -236,30 +276,39 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
     const { setUserCvs, userCvs, getCvsErrors, setGetCvsErrors } = useContext(UserContext);
     const [isDownloaded, setIsDownloaded] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-    let location = useLocation();
+    let location = useLocation();<View style={styles.line}></View>
 
 
     const saveCvToDatabase = () => {
-        if (!getCvsErrors) {
+        if(!getCvsErrors){
+            if(cv.cvName==""){
+                setGetCvsErrors("please fill the cvName , it can't be empty");
+                return;
+            }
             axios
-                .post(`http://localhost:8000/addcv/`, cv)
-                .then((res) => {
-
-                    console.log(res);
-                    setUserCvs({
-                        ...userCvs,
-                        data: [...(userCvs.data), cv]
-                    });
-                })
-                .catch((error) => {
+            .post(`http://localhost:8000/addcv/`, cv)
+            .then((res) => {
+                console.log(userCvs);
+                console.log(res);
+                setUserCvs((prevUserCvs:any) => ({
+                    ...prevUserCvs,
+                    data: [
+                        ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data : []), // Ensure data is an array
+                        res.data// hereeeeeeeeeeee
+                    ]
+                }));
+                setShowSuccess(true); // Show success alert
+            })
+            .catch((error) => {
+                
+                setShowSuccess(false); // Show success alert
+                console.log(error);
+                if(error?.response?.data?.error)
                     setGetCvsErrors(error.response.data.error);
-                    console.log(error.response.data.error);
-                    console.log(error);
-
-                });
-        }
-
-
+                
+            });}
+        
+            
     };
 
     const editCv = () => {
@@ -286,7 +335,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
 
     return (
         <>
-            <div className="a4-container">
+            <div className="a4-container text-break" style={{minHeight: "550px",maxHeight:"550px"}}>
                 <div className="row g-0">
                     <div className="col-12">
                         <div className="text-black">
@@ -375,7 +424,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                                         </div>
                                         <div className="ms-2 text-break text-black">
                                             {project.projectDetails.split(/(?<=[.!?])\n/).map((line, idx) => (
-                                                line && <span key={idx}>{`• ` + line}<br /></span>
+                                                line && <span key={idx}>{`•` + line}<br /></span>
                                             ))}
                                         </div>
                                     </div>
@@ -389,7 +438,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                     {cv?.experiences?.length !== 0 && (
                         <div className="col-12">
                             <div className="experiences mb-1">
-                                <div className="title text-info-emphasis fw-bold" style={{ fontSize: "8px" }}>
+                                <div className="title text-info-emphasis fw-bold" style={{ fontSize: "8px", color: txtcol }}>
                                     Work Experience
                                 </div>
                                 {cv.experiences.map((experience, index) => (
@@ -418,7 +467,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                     {cv?.extraCurricularActivities?.length !== 0 && (
                         <div className="col-12">
                             <div className="activities mb-1">
-                                <div className="title text-info-emphasis fw-bold" style={{ fontSize: "8px" }}>
+                                <div className="title text-info-emphasis fw-bold" style={{ fontSize: "8px", color: txtcol }}>
                                     Extracurricular Activities
                                 </div>
                                 <div className="content m-0" style={{ fontSize: "7px" }}>
@@ -453,7 +502,7 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
                         <div className="toast-header">
                             <strong className="me-auto">Can't save to our database</strong>
                             <small>Now</small>
-                            <button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            
                         </div>
                         <div className="toast-body">
                             {getCvsErrors}
