@@ -271,6 +271,8 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             return () => clearTimeout(timer);
         }
     }, [getCvsErrors]);
+
+
     const saveCvToDatabase = () => {
         if(!getCvsErrors){
             axios
@@ -325,6 +327,8 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             return () => clearTimeout(timer);
         }
     }, [showSuccess]);
+
+
     return (
         <>
             <div className="container bg-light overflow-hidden" style={{minHeight: "550px",maxHeight:"550px"}}>
@@ -537,6 +541,8 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                     </PDFDownloadLink>
                 )}
             </div>
+
+            
             {getCvsErrors&& (<div className="alert alert-danger position-fixed  p-3" style={{bottom:"10px",right:"10px"}}>
                 <div >
                     <div className="toast-header">

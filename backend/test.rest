@@ -79,7 +79,7 @@ Get http://127.0.0.1:8000/usercvs/1
 Content-Type: application/json
 
 ###
-Get http://127.0.0.1:8000/cv/34
+Get http://127.0.0.1:8000/cv/1
 Content-Type: application/json
 
 

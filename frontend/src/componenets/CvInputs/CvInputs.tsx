@@ -12,15 +12,18 @@ import axios from "axios";
 import Cv2 from "../Cv2";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import Cv3 from "../../Cv3";
 
 type CvInputsProps = {
-    isEditing:boolean;
+    isEditing: boolean;
 }
 
 
-const CvInputs = ({isEditing}:CvInputsProps) => {
+const CvInputs = ({ isEditing }: CvInputsProps) => {
 
-    const {templateId,userId,cvId} = useParams();
+    const { templateId, userId, cvId } = useParams<{ templateId?: string; userId?: string; cvId?: string }>();
+
+
     const [goSteps, setGoSteps] = useState(0);
     const [activity, setActivity] = useState("");
     const [skill, setSkill] = useState("");
@@ -42,9 +45,9 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
 
     const [formData, setFormData] = useState<CvModel>({
         userId: Number(userId),
-        cvId:Number(cvId),
-        template:templateId,
-        cvName:"",
+        cvId: Number(cvId),
+        template: templateId,
+        cvName: "",
         firstName: "",
         lastName: "",
         job: "",
@@ -65,26 +68,40 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
         extraCurricularActivities: [] as string[]
     });
 
-    useEffect(()=>{
-        if(isEditing){
-            axios
-            .get(`http://127.0.0.1:8000/cv/${cvId}`)
-            .then((res) => {
-                
-                setFormData(res.data.data)
-                
-            })
-            .catch((error) => {
-                
-                console.log(error)
-            });
+
+    const renderTemplate = () => {
+        switch (templateId) {
+            case "1":
+                return <Cv cv={formData} isEditableTemplate={false} />;
+            case "2":
+                return <Cv2 cv={formData} isEditableTemplate={false} />;
+            case "3":
+                return <Cv3 cv={formData} isEditableTemplate={false} />;
+            default:
+                return null;
         }
-        
+    };
+
+    useEffect(() => {
+        if (isEditing) {
+            axios
+                .get(`http://127.0.0.1:8000/cv/${cvId}`)
+                .then((res) => {
+
+                    setFormData(res.data.data)
+
+                })
+                .catch((error) => {
+
+                    console.log(error)
+                });
+        }
+
     }, [cvId])
-    
 
 
-    
+
+
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
@@ -208,7 +225,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
         });
     };
 
-    useEffect(() => {}, [formData]);
+    useEffect(() => { }, [formData]);
     return (
         <>
             <div className="pt-5 mt-5  container  vh-100">
@@ -281,7 +298,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             {goSteps === 0 && (
                                 <div className="container-fluid">
                                     <div className="row">
-                                    <div className="col-md-12">
+                                        <div className="col-md-12">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="cvName"
@@ -897,7 +914,7 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                                                 </>
                                             ) : (
                                                 formData.experiences.length >
-                                                    0 && (
+                                                0 && (
                                                     <>
                                                         {formData.experiences.map(
                                                             (
@@ -1020,12 +1037,9 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            {templateId=="1"?
-                            (<Cv cv={formData} isEditableTemplate={false}/>) 
-                            : templateId=="2"?
-                            (<Cv2 cv={formData} isEditableTemplate={false}/> )
-                            :<></>}
-                            
+                            {/* {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>} */}
+                            {renderTemplate()}
+
                         </div>
                     </div>
                 </div>
