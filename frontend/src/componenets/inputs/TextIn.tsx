@@ -1,12 +1,12 @@
-import { TextInProps } from "../../interfaces";
+import { TextInProps } from "../../Interfaces/IApplications";
 
-export default function TextIn({ name, onKeyDown }: TextInProps) {
-    return (
-        <input
-            type="text"
-            className="form-control my-2 py-3"
-            name={name}
-            onKeyDown={onKeyDown}
-        />
-    );
+export default function TextIn({ name, onChange }: TextInProps) {
+  return (
+    <input
+      type="text"
+      className="form-control"
+      name={name}
+      onChange={onChange}
+    />
+  );
 }
