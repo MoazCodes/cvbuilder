@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import { AppsObj } from "../Interfaces/IApplications";
 import { faker } from "@faker-js/faker";
 import { ApplicationsContextType } from "../Interfaces/ApplicationsContextType";
@@ -26,8 +26,26 @@ export const ApplicationsContext =
 
 const ApplicationProvider = ({ children }: { children: React.ReactNode }) => {
   const [allApps, setAllApps] = useState(intialApps);
+  const changeAppCategory = useCallback(
+    (id: string, category: string) => {
+      const app = allApps?.find((app: AppsObj) => app.id === id);
+      if (!app) {
+        console.error(`App with id ${id} not found`);
+        return;
+      }
+
+      const updatedApp = { ...app, category };
+      const newApps =
+        allApps?.map((app: AppsObj) => (app.id === id ? updatedApp : app)) ||
+        [];
+
+      setAllApps(newApps);
+    },
+    [allApps] // Include appsContext as a dependency
+  );
+
   return (
-    <ApplicationsContext.Provider value={{ allApps, setAllApps }}>
+    <ApplicationsContext.Provider value={{ allApps, setAllApps, changeAppCategory }}>
       {children}
     </ApplicationsContext.Provider>
   );
