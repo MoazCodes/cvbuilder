@@ -1,75 +1,54 @@
 import { ApplicationsListProps } from "../../Interfaces/IApplications";
 import ApplicationsCard from "./ApplicationsCard";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextIn from "../inputs/TextIn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faker } from "@faker-js/faker";
+import { ApplicationsContextType } from "../../Interfaces/ApplicationsContextType";
+import { ApplicationsContext } from "../../Context/ApplicationsContext";
+
 export default function ApplicationsList({
-    apps,
-    title,
-    setApps,
+  apps,
+  title,
 }: ApplicationsListProps) {
-    const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
-    return (
-        <div className="col-md-4 col-sm-12 min-vh-70 max-vh-70 overflow-hidden">
-            <div className="row justify-between ">
-                <div className="col position-relative">
-                    <h2>{title}</h2>
-                </div>
-                <div className="col text-end">
-                    <button
-                        className="btn"
-                        style={{ backgroundColor: "var(--main-color)" }}
-                        onClick={() => setIsAddBtn(!isAddBtn)}
-                    >
-                        <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                </div>
-                <hr
-                    className=" mx-auto "
-                    style={{
-                        border: "solid 2px var(--main-color) ",
-                        opacity: 1,
-                        width: "95%",
-                    }}
-                />
-            </div>
-            {isAddBtn ? (
-                <TextIn
-                    name="apps2add"
-                    onKeyDown={(e) => {
-                        if (e.code === "Enter") {
-                            const target = e.target as HTMLInputElement;
-                            if (target.value.trim() != "") {
-                                setApps((prevApps:any) => [
-                                    target.value,
-                                    ...prevApps,
-                                ]);
-                            }
-                            // target.value = ""; // Clear the input if desired
-                            setIsAddBtn(!isAddBtn);
-                        }
-                    }}
-                />
-            ) : null}
-            <div className="group max-vh-70 overflow-auto">
-                {apps.length > 0 && (
-                    <ul
-                        className="list-group border rounded-0"
-                        style={{ borderColor: "#fcc7ee45; !important" }}
-                    >
-                        {apps.map((app:any, idx:number) => (
-                            <ApplicationsCard
-                                key={idx}
-                                title={app}
-                                id={idx}
-                                setApps={setApps}
-                                apps={apps}
-                            />
-                        ))}
-                    </ul>
-                )}
-            </div>
+  const appsContext: ApplicationsContextType | null =
+    useContext(ApplicationsContext);
+  const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && (e.target as HTMLInputElement).value) {
+      appsContext?.setAllApps((prev) => {
+        const allApps = [
+          ...prev,
+          {
+            category: title,
+            id: faker.string.uuid(),
+            title: (e.target as HTMLInputElement).value,
+          },
+        ];
+        return allApps;
+      });
+      setIsAddBtn(false);
+    } else if (e.key === "Escape") {
+      setIsAddBtn(false);
+    }
+  };
+
+  return (
+    <div className="col-4">
+      <div className="row justify-between">
+        <h2 className="col">{title}</h2>
+        <div className="col text-end">
+          <button className="btn btn-primary" onClick={() => setIsAddBtn(true)}>
+            <CgAddR />
+          </button>
         </div>
-    );
+      </div>
+      <ul className="list-group">
+        {isAddBtn && <TextIn name="apps2add" onKeyDown={onKeyDown} />}
+        {apps?.map((app) => (
+          <ApplicationsCard key={app.id} title={app.title} id={app.id} />
+        ))}
+      </ul>
+    </div>
+  );
 }

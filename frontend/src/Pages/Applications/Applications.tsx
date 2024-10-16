@@ -1,55 +1,66 @@
 import { faker } from "@faker-js/faker";
-import Styles from "./Applications.module.css";
 import ApplicationsList from "../../componenets/applications/ApplicationsList";
-import { useState } from "react";
+import { AppsObj } from "../../Interfaces/IApplications";
+import Styles from "./Applications.module.css";
+import { useContext } from "react";
+import { ApplicationsContext } from "../../Context/ApplicationsContext";
+import { ApplicationsContextType } from "../../Interfaces/ApplicationsContextType";
+
 export default function Applications() {
-    let add = (type: string[], taskToBeAdded: string) => {
-        type.push(taskToBeAdded);
-    };
-    const [Favorites, setFavorites] = useState<string[]>([]);
-    const [Applied, setApplied] = useState<string[]>([]);
-    const [Interview, setInterview] = useState<string[]>([]);
-    const [Offer, setOffer] = useState<string[]>([]);
-    const [Hired, setHired] = useState<string[]>([]);
-    const [Rejected, setRejected] = useState<string[]>([]);
-    return (
-        <div
-            className={`text-white p-4 min-vh-100 bg-transparent overflow-auto mt-5`}
-        >
-            <div className="container">
-                <div className="row g-5">
-                    <ApplicationsList
-                        title="Favorites"
-                        apps={Favorites}
-                        setApps={setFavorites}
-                    />
-                    <ApplicationsList
-                        title="Applied"
-                        apps={Applied}
-                        setApps={setApplied}
-                    />
-                    <ApplicationsList
-                        title="Interview"
-                        apps={Interview}
-                        setApps={setInterview}
-                    />
-                    <ApplicationsList
-                        title="Offer"
-                        apps={Offer}
-                        setApps={setOffer}
-                    />
-                    <ApplicationsList
-                        title="Rejected"
-                        apps={Rejected}
-                        setApps={setRejected}
-                    />
-                    <ApplicationsList
-                        title="Hired"
-                        apps={Hired}
-                        setApps={setHired}
-                    />
-                </div>
-            </div>
+  const appsContext: ApplicationsContextType | null =
+    useContext(ApplicationsContext);
+  // Check if allApps is available
+  if (!appsContext?.allApps) {
+    return <div>Loading...</div>; // You can replace this with a loading spinner or message
+  }
+
+  return (
+    <div
+      className={`text-white p-4 min-vh-100 ${Styles["min-w-fit"]} ${Styles["overflow-x-visible"]}`}
+    >
+      <h1 id="applications" className="fs-3 fw-bold mt-5">
+        Applications
+      </h1>
+      <div className="container py-5">
+        <div className="row flex-nowrap gap-3">
+          <ApplicationsList
+            title="Favorites"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Favorites"
+            )}
+          />
+          <ApplicationsList
+            title="Applied"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Applied"
+            )}
+          />
+          <ApplicationsList
+            title="Interview"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Interview"
+            )}
+          />
+          <ApplicationsList
+            title="Offer"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Offer"
+            )}
+          />
+          <ApplicationsList
+            title="Rejected"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Rejected"
+            )}
+          />
+          <ApplicationsList
+            title="Hired"
+            apps={appsContext?.allApps.filter(
+              (app: AppsObj) => app.category === "Hired"
+            )}
+          />
         </div>
-    );
+      </div>
+    </div>
+  );
 }
