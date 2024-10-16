@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 const Navbar = () => {
     const {userData ,logout} = useContext(UserContext);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     
 
     return (

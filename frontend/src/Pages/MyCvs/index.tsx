@@ -13,6 +13,11 @@ const MyCvs = () => {
     const {userId}=useParams();
     const navigate = useNavigate();
 
+    console.log(userCvs )
+    console.log(getCvsErrors )
+    console.log(setUserCvs )
+    console.log(getUserId )
+    
     
 
     const deleteAllCvs = ()=>{
