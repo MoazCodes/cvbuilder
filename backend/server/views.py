@@ -162,8 +162,7 @@ def add_cv(request):
         activity, created = ExtracurricularActivity.objects.get_or_create(activity_name=activity_name)
         cv.extracurricular_activities.add(activity)
 
-    return Response({"message": "CV added successfully"}, status=status.HTTP_201_CREATED)
-
+    return Response({"message": "CV added successfully", "cvId": cv.id}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET'])

@@ -15,7 +15,7 @@ POST http://127.0.0.1:8000/addcv/
 Content-Type: application/json
 
 {
-    "cvName": "shshf2322 cv",
+    "cvName": "md cv",
     "userId": 1,
     "template":"2",
     "firstName":"ahmed",
