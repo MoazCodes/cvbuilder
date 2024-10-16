@@ -1,4 +1,4 @@
-import { CgAddR } from "react-icons/cg";
+
 import { ApplicationsListProps, AppsObj } from "../../Interfaces/IApplications";
 import ApplicationsCard from "./ApplicationsCard";
 import React, { useContext, useRef, useState } from "react";
