@@ -10,9 +10,10 @@ import StepperLevel from "../stepperLevels";
 import { CvModel, Experience, Project } from "../../Interfaces/CvInterfaces";
 import axios from "axios";
 import Cv2 from "../Cv2";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cv3 from "../../Cv3";
+import { required } from "joi";
 
 type CvInputsProps = {
     isEditing: boolean;
@@ -22,7 +23,7 @@ type CvInputsProps = {
 const CvInputs = ({ isEditing }: CvInputsProps) => {
 
     const { templateId, userId, cvId } = useParams<{ templateId?: string; userId?: string; cvId?: string }>();
-
+    const location = useLocation();
 
     const [goSteps, setGoSteps] = useState(0);
     const [activity, setActivity] = useState("");
@@ -308,12 +309,15 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 </label>
                                                 <input
                                                     type="text"
-                                                    className="form-control "
+                                                    className="form-control"
                                                     id="cvName"
                                                     placeholder="AhmedCv_1"
                                                     onChange={handleInput}
                                                     name="cvName"
                                                     value={formData.cvName}
+                                                    required
+                                                    readOnly={location.pathname.includes("edit")}
+                                                    disabled={location.pathname.includes("edit")}
                                                 />
                                             </div>
                                         </div>
@@ -1034,7 +1038,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                         </div>
                         <div className="col-md-1"></div>
                         <div
-                            className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
+                            className="col-md-3 col-sm-12 bg-light position-relative text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
                             {/* {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>} */}

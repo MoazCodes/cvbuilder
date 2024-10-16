@@ -10,7 +10,7 @@ const StepperLevel = ({ currentLevel, setGoSteps }: stepperLevelProps) => {
             {currentLevel > 0 && (
                 <div className="d-flex justify-content-start w-100">
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-primary my-3"
                         onClick={() => setGoSteps(currentLevel - 1)}
                     >
                         back
@@ -20,19 +20,13 @@ const StepperLevel = ({ currentLevel, setGoSteps }: stepperLevelProps) => {
             {currentLevel < 6 ? (
                 <div className="d-flex justify-content-end w-100">
                     <button
-                        className="btn btn-primary "
+                        className="btn btn-primary my-3"
                         onClick={() => setGoSteps(currentLevel + 1)}
                     >
                         Next
                     </button>
                 </div>
-            ) : (
-                <div className="d-flex justify-content-end w-100">
-                    <button className="btn btn-primary " onClick={() => {}}>
-                        Submit
-                    </button>
-                </div>
-            )}
+            ) : <></>}
         </div>
     );
 };

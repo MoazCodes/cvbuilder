@@ -8,73 +8,49 @@ const Templates = () => {
         <>
             <div className="container vh-100 d-flex flex-column align-items-center justify-content-center">
                 <h2 className="mb-5">Please choose your template</h2>
-                <div className="row justify-content-center h-50 ">
-                    <div className="col">
-                        <Link className="template" to={`/templates/1/${getUserId()}`}>
+                <div className="row justify-content-center h-50 g-4">
+                    <div className="col-md-6" style={{ width: "100%" ,maxWidth:"400px" ,height:"550px"}}>
+                        <Link className="template w-100 h-100" to={`/templates/1/${getUserId()}` } >
                             <div
                                 role="button"
-                                className="templateImage p-1 border  "
+                                className="templateImage p-1 border w-100 h-100 "
+                                
                             >
                                 <img
-                                    src="assets/cv4.jpg"
+                                    src="assets/cv1.jpg"
                                     alt="cvTemplate"
-                                    style={{ width: "100%" }}
+                                    className="w-100 h-100 mb-5"
                                 />
                             </div>
                         </Link>
                     </div>
-                    <div className="col ">
-                    <Link className="template" to={`/templates/2/${getUserId()}`}>
+                    <div className="col-md-6" style={{ width: "100%" ,maxWidth:"400px" ,height:"550px"}}>
+                    <Link className="template w-100 h-100" to={`/templates/2/${getUserId()}`} >
                             <div
                                 role="button"
-                                className="templateImage p-1 border "
+                                className="templateImage p-1 border w-100 h-100"
+                                
                             >
                                 <img
-                                    src="assets/cv2-template.png"
+                                    src="assets/cv2.png"
                                     alt="cvTemplate"
-                                    style={{ width: "100%" }}
+                                    
+                                    className="w-100 h-100 mb-5"
                                 />
                             </div>
                         </Link>
                     </div>
-                    <div className="col ">
-                    <Link className="template" to={`/templates/3/${getUserId()}`}>
+                    <div className="col-md-6" style={{ width: "100%" ,maxWidth:"400px" ,height:"550px"}}>
+                    <Link className="template w-100 h-100" to={`/templates/3/${getUserId()} `} >
                             <div
                                 role="button"
-                                className="templateImage p-1 border "
+                                className="templateImage p-1 border w-100 h-100 "
+                                
                             >
                                 <img
-                                    src="assets/cv4.jpg"
+                                    src="assets/cv3.jpg"
                                     alt="cvTemplate"
-                                    style={{ width: "100%" }}
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="col ">
-                    <Link className="template" to={`/templates/4/${getUserId()}`}>
-                            <div
-                                role="button"
-                                className="templateImage p-1 border "
-                            >
-                                <img
-                                    src="assets/cv4.jpg"
-                                    alt="cvTemplate"
-                                    style={{ width: "100%" }}
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    <div className="col ">
-                    <Link className="template" to={`/templates/5/${getUserId()}`}>
-                            <div
-                                role="button"
-                                className="templateImage p-1 border "
-                            >
-                                <img
-                                    src="assets/cv4.jpg"
-                                    alt="cvTemplate"
-                                    style={{ width: "100%" }}
+                                    className="w-100 h-100 mb-5"
                                 />
                             </div>
                         </Link>

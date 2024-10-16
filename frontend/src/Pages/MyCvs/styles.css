@@ -1,0 +1,40 @@
+
+
+
+.leftDelete, .rightEdit {
+    opacity: 0; /* Initially hide the buttons */
+    transition: opacity 0.3s ease; /* Smooth transition for the button opacity */
+}
+
+.myCv:hover .leftDelete,
+.myCv:hover .rightEdit {
+    opacity: 1; /* Show the buttons on hover */
+}
+
+.leftDelete {
+    width: fit-content !important;
+    position: absolute;
+    left: -20%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    transition: 0.2s all;
+}
+
+.rightEdit {
+    width: fit-content !important;
+    position: absolute;
+    right: -20%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    transition: 0.2s all;
+}
+
+.myCv:hover .leftDelete {
+    left: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.myCv:hover .rightEdit {
+    right: 30%;
+    transform: translate(-50%, -50%);
+}

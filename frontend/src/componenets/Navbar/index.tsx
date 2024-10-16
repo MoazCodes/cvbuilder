@@ -31,7 +31,7 @@ const Navbar = () => {
                     >
                         <div className="navbar-nav ms-auto ">
                             <Link
-                                className="nav-link active"
+                                className="nav-link active mx-2"
                                 aria-current="page"
                                 to={""}
                             >

@@ -25,6 +25,7 @@ const Pdf = ({ cv }: CvProps) => {
         <Document>
             <Page size="A4" style={styles.page}>
                 <View style={styles.container}>
+
                     {/* Personal Details Section */}
                     <View style={styles.personalDetails}>
                         <Text style={styles.name}>
@@ -32,106 +33,99 @@ const Pdf = ({ cv }: CvProps) => {
                         </Text>
                         <Text style={styles.jobTitle}>{cv.job}</Text>
                         <Text style={styles.details}>
-                            {cv.city}
-                            {cv.country && ", "}
-                            {cv.country}
-                            {cv.email && " | "}
-                            {cv.email && (
+                            {cv.city}, {cv.country} | {cv.email && (
                                 <PdfLink
                                     src={`mailto:${cv.email}`}
                                     style={styles.link}
                                 >
-                                    Email
+                                    {cv.email}
                                 </PdfLink>
                             )}
                         </Text>
                     </View>
 
+                    {/* Divider between sections */}
+                    <View style={styles.line} />
+
                     {/* Objective Section */}
                     {cv.objective.trim() && (
-                        <View style={[styles.section]}>
-                            <Text style={[styles.title, styles.borderBottom]}>
-                                Objective
-                            </Text>
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Objective</Text>
                             <Text style={styles.content}>{cv.objective}</Text>
                         </View>
                     )}
 
                     {/* Education Section */}
                     {cv.school.trim() && (
-                        <View style={[styles.section]}>
-                            <Text style={[styles.title, styles.borderBottom]}>
-                                Education
-                            </Text>
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Education</Text>
                             <View style={styles.educationDetails}>
                                 <Text style={styles.schoolName}>
-                                    {cv.school}
-                                    {cv.city && ", "}
-                                    {cv.schoolCity}
-                                    {cv.schoolCountry && ", "}
-                                    {cv.schoolCountry}
+                                    {cv.school}, {cv.schoolCity}, {cv.schoolCountry}
                                 </Text>
                                 <Text style={styles.schoolDate}>
                                     {cv.endSchoolDate
-                                        ? `${cv.startSchoolDate.substring(
-                                              0,
-                                              7
-                                          )} / ${cv.endSchoolDate.substring(
-                                              0,
-                                              7
-                                          )}`
+                                        ? `${cv.startSchoolDate.substring(0, 7)} / ${cv.endSchoolDate.substring(0, 7)}`
                                         : cv.startSchoolDate.substring(0, 7)}
                                 </Text>
                             </View>
                             <Text style={styles.educationContent}>
-                                Studied{" "}
-                                <Text style={styles.bold}>
-                                    {cv.schoolDepartment}
-                                </Text>{" "}
-                                at <Text style={styles.bold}>{cv.degree}</Text>
+                                Studied <Text style={styles.bold}>{cv.schoolDepartment}</Text> at <Text style={styles.bold}>{cv.degree}</Text>
                             </Text>
                         </View>
                     )}
 
                     {/* Skills Section */}
                     {cv.skills.length !== 0 && (
-                        <View style={[styles.section]}>
-                            <Text style={[styles.title, styles.borderBottom]}>
-                                Skills
-                            </Text>
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Skills</Text>
                             <Text style={styles.content}>
                                 {cv.skills.join(" | ")}
                             </Text>
                         </View>
                     )}
 
+                    {/* Work Experience Section */}
+                    {cv.experiences.length !== 0 && (
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Work Experience</Text>
+                            {cv.experiences.map((experience, index) => (
+                                <View key={index} style={styles.experience}>
+                                    <View style={styles.flexbetween}>
+                                        <Text>{experience.jobTitle}</Text>
+                                        <Text>{experience.company}</Text>
+                                    </View>
+                                    <View style={styles.flexbetween}>
+                                        <Text>{experience.startJobDate}</Text>
+                                        <Text>{experience.endJobDate}</Text>
+                                    </View>
+                                    <Text style={styles.content}>
+                                        {experience.jobDescription.split("\n").map((line, idx) => (
+                                            <Text key={idx}>• {line}{"\n"}</Text>
+                                        ))}
+                                    </Text>
+                                </View>
+                            ))}
+                        </View>
+                    )}
+
+                    
+
                     {/* Projects Section */}
                     {cv.projects.length !== 0 && (
-                        <View style={[styles.section]}>
-                            <Text style={[styles.title, styles.borderBottom]}>
-                                Projects
-                            </Text>
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Projects</Text>
                             {cv.projects.map((project, index) => (
                                 <View key={index} style={styles.project}>
                                     <View style={styles.projectHeader}>
                                         <Text>{project.projectName}</Text>
                                         <Text>{project.projectDate}</Text>
                                     </View>
-                                    <View style={styles.description}>
-                                        {project.projectDetails
-                                            .split("\n")
-                                            .map((line, idx) => (
-                                                <View
-                                                    key={idx}
-                                                    style={styles.activity}
-                                                >
-                                                    <Text>
-                                                        • {line}
-                                                        {"\n"}
-                                                    </Text>
-                                                </View>
-                                            ))}
-                                    </View>
+                                    <Text style={styles.description}>
+                                        {project.projectDetails.split("\n").map((line, idx) => (
+                                            <Text key={idx}>• {line}{"\n"}</Text>
+                                        ))}
+                                    </Text>
                                 </View>
                             ))}
                         </View>
@@ -139,25 +133,11 @@ const Pdf = ({ cv }: CvProps) => {
 
                     {/* Extracurricular Activities Section */}
                     {cv.extraCurricularActivities.length !== 0 && (
-                        <View style={[styles.section]}>
-                            <Text style={[styles.title, styles.borderBottom]}>
-                                Extracurricular Activities
-                            </Text>
-                            <View style={styles.content}>
-                                {cv.extraCurricularActivities.map(
-                                    (activity, index) => (
-                                        <View
-                                            key={index}
-                                            style={styles.activity}
-                                        >
-                                            <Text>
-                                                {activity}
-                                                {"\n"}
-                                            </Text>
-                                        </View>
-                                    )
-                                )}
-                            </View>
+                        <View style={styles.section}>
+                            <Text style={styles.title}>Extracurricular Activities</Text>
+                            {cv.extraCurricularActivities.map((activity, index) => (
+                                <Text key={index} style={styles.content}>{activity}{"\n"}</Text>
+                            ))}
                         </View>
                     )}
                 </View>
@@ -169,6 +149,7 @@ const styles = StyleSheet.create({
     page: {
         padding: 30,
         fontSize: "15pt",
+        lineHeight: 1.3, // Adjust for better readability
     },
     container: {
         width: "100%",
@@ -180,6 +161,7 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: "bold",
         fontSize: "20pt",
+        color: "#055160", // Example color
     },
     jobTitle: {
         fontWeight: "bold",
@@ -195,9 +177,9 @@ const styles = StyleSheet.create({
         textDecoration: "none",
     },
     section: {
-        marginTop: 10,
-        marginBottom: 10,
-        borderBottom: "  1px",
+        marginTop: 5,
+        marginBottom: 5,
+        borderBottom: " 1px",
     },
     title: {
         fontSize: "13pt",
@@ -206,7 +188,7 @@ const styles = StyleSheet.create({
         marginBottom: 3,
     },
     content: {
-        fontSize: "9pt",
+        fontSize: "10pt",
         marginTop: 5,
     },
     educationDetails: {
@@ -221,10 +203,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     schoolDate: {
-        fontSize: "9pt",
+        fontSize: "10pt",
     },
     educationContent: {
-        fontSize: "9pt",
+        fontSize: "10pt",
     },
     bold: {
         fontWeight: "bold",
@@ -241,17 +223,32 @@ const styles = StyleSheet.create({
         color: "#183ccc",
     },
     description: {
-        fontSize: "9pt",
+        fontSize: "10pt",
         marginTop: 5,
     },
     activity: {
         marginBottom: 3,
     },
     borderBottom: {
-        borderBottomWidth: 1, // Width of the border
+        borderBottomWidth: 1,
         borderBottomColor: "#ececec", // Color of the border
         borderBottomStyle: "solid", // Style of the border (solid, dashed, etc.)
     },
+    experience: {
+        marginBottom: 10, // Ensures spacing between experiences
+    },
+    line: {
+        borderBottomWidth: 5,
+        borderBottomColor: "#ececec",  // Color of the line
+        marginTop: 5,                  // Space above the line
+        marginBottom: 10,              // Space below the line
+    },
+    flexbetween: {
+        display: "flex",
+        flexDirection: "row", // Ensures items are in a row
+        justifyContent: "space-between", // Distributes space between child components
+        alignItems: "center", // Centers items vertically
+    }
 });
 
 const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
@@ -267,28 +264,39 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                 setGetCvsErrors(null); // Clear the error after 3 seconds
             }, 3000);
 
-            navigate('/mycvs');
+            
             return () => clearTimeout(timer);
         }
+       
     }, [getCvsErrors]);
 
 
     const saveCvToDatabase = () => {
         if(!getCvsErrors){
+            if(cv.cvName==""){
+                setGetCvsErrors("please fill the cvName , it can't be empty");
+                return;
+            }
             axios
             .post(`http://localhost:8000/addcv/`, cv)
             .then((res) => {
-                
+                console.log(userCvs);
                 console.log(res);
-                setUserCvs({
-                    ...userCvs, 
-                    data: [...(userCvs.data), cv] 
-                });
+                setUserCvs((prevUserCvs:any) => ({
+                    ...prevUserCvs,
+                    data: [
+                        ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data : []), // Ensure data is an array
+                        res.data// hereeeeeeeeeeee
+                    ]
+                }));
+                setShowSuccess(true); // Show success alert
             })
             .catch((error) => {
-                setGetCvsErrors(error.response.data.error);
-                console.log(error.response.data.error);
+                
+                setShowSuccess(false); // Show success alert
                 console.log(error);
+                if(error?.response?.data?.error)
+                    setGetCvsErrors(error.response.data.error);
                 
             });}
         
@@ -314,16 +322,17 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             saveCvToDatabase();
         }
         setIsDownloaded(true); // Set downloaded state to true
-        setShowSuccess(true); // Show success alert
+        
     };
 
     useEffect(() => {
         if (showSuccess) {
             const timer = setTimeout(() => {
                 setShowSuccess(false); // Hide success alert after 3 seconds
-                navigate('/mycvs');
+                
             }, 3000);
-
+            if (showSuccess&&!getCvsErrors) 
+                navigate('/mycvs');
             return () => clearTimeout(timer);
         }
     }, [showSuccess]);
