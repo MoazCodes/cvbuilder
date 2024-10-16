@@ -5,7 +5,7 @@ export default function TextIn({ name, onKeyDown }: TextInProps) {
   return (
       <input
         type="text"
-        className={`form-control ${styles["bg-white"]}`}
+        className={`form-control bg-transparent py-3`}
         name={name}
         onKeyDown={onKeyDown}                                          
       />

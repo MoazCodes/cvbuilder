@@ -5,7 +5,7 @@ import Cv from "../../componenets/CV";
 import { CvModel } from "../../Interfaces/CvInterfaces";
 import { UserContext } from "../../Context/UserContext";
 import Cv2 from "../../componenets/Cv2";
-import Cv3 from "../../Cv3";
+import Cv3 from "../../componenets/Cv3";
 import './styles.css';
 
 const MyCvs = () => {

@@ -282,11 +282,12 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             .then((res) => {
                 console.log(userCvs);
                 console.log(res);
+                cv.cvId=res?.data?.cvId;
                 setUserCvs((prevUserCvs:any) => ({
                     ...prevUserCvs,
                     data: [
                         ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data : []), // Ensure data is an array
-                        res.data// hereeeeeeeeeeee
+                        cv// hereeeeeeeeeeee
                     ]
                 }));
                 setShowSuccess(true); // Show success alert
@@ -308,6 +309,13 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             .put(`http://127.0.0.1:8000/editcv/`,cv)
             .then((res) => {
                 console.log(res)
+                setUserCvs((prevUserCvs:any) => ({
+                    ...prevUserCvs,
+                    data: [
+                        ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data.filter((allcv: CvModel) => cv.cvId !== allcv.cvId) : []),
+                        cv// hereeeeeeeeeeee
+                    ]
+                }));
             })
             .catch((error) => {
                 
@@ -345,7 +353,7 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                     <div className="col-12">
                         <div className="personalDetails text-center mt-1 text-black">
                             <div
-                                className="name fw-bold "
+                                className="name fw-bold text-break"
                                 style={{ fontSize: "80%" }}
                             >
                                 {cv.firstName + " " + cv.lastName}
@@ -507,6 +515,35 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
                             </div>
                         </div>
                     ) }
+
+
+                    {cv?.experiences?.length !== 0 && (
+                        <div className="col-12">
+                            <div className="experiences mb-1">
+                                <div className="title text-info-emphasis fw-bold" style={{ fontSize: "8px" }}>
+                                    Work Experience
+                                </div>
+                                {cv.experiences.map((experience, index) => (
+                                    <div key={index} className="col-12 mb-1 ms-1" style={{ fontSize: "7px" }}>
+                                        <div className="title d-flex justify-content-between fw-medium" style={{ color: "#183ccc" }}>
+                                            <div className="jobTitle">{experience.jobTitle}</div>
+                                            <div className="company">{experience.company}</div>
+                                        </div>
+                                        <div className="d-flex justify-content-between" style={{ fontSize: "7px" }}>
+                                            <div className="startDate">{experience.startJobDate}</div>
+                                            <div className="endDate">{experience.endJobDate}</div>
+                                        </div>
+                                        <div className="ms-2 text-break text-black">
+                                            {experience.jobDescription.split(/(?<=[.!?])\n/).map((line, idx) => (
+                                                line && <span key={idx}>{`• ` + line}<br /></span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <hr className='my-1' />
+                        </div>
+                    )}
 
                     {cv?.extraCurricularActivities?.length !== 0 && (
                         <div className="col-12">

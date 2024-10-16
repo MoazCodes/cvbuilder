@@ -1,0 +1,6 @@
+.applicationCard button {
+    transition: all 0.3s !important;
+}
+.applicationCard:hover button {
+    margin-right: 0 !important;
+}
