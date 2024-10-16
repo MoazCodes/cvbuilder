@@ -1,26 +1,36 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import { AppsObj } from "../Interfaces/IApplications";
 import { faker } from "@faker-js/faker";
+import { ApplicationsContextType } from "../Interfaces/ApplicationsContextType";
 
 function ApplicationCreator(): AppsObj {
-    const categories = ["Favorites", "Applied", "Interview", "Offer", "Rejected", "Hired"];
-    return {
-        title: faker.lorem.words(),
-        id: faker.string.uuid(),
-        category: categories[Math.floor(Math.random() * categories.length)] // Use Math.floor to get a valid index
-    };
+  const categories = [
+    "Favorites",
+    "Applied",
+    "Interview",
+    "Offer",
+    "Rejected",
+    "Hired",
+  ];
+  return {
+    title: faker.lorem.words(),
+    id: faker.string.uuid(),
+    category: categories[Math.floor(Math.random() * categories.length)], // Use Math.floor to get a valid index
+  };
 }
 
-const allApps: AppsObj[] = Array.from({ length: 15 }, ApplicationCreator);
+const intialApps: AppsObj[] = Array.from({ length: 10 }, ApplicationCreator);
 
-export const ApplicationsContext = createContext<{ allApps: AppsObj[] } | null>(null);
+export const ApplicationsContext =
+  createContext<ApplicationsContextType | null>(null);
 
 const ApplicationProvider = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <ApplicationsContext.Provider value={{ allApps }}>
-            {children}
-        </ApplicationsContext.Provider>
-    );
+  const [allApps, setAllApps] = useState(intialApps);
+  return (
+    <ApplicationsContext.Provider value={{ allApps, setAllApps }}>
+      {children}
+    </ApplicationsContext.Provider>
+  );
 };
 
 export default ApplicationProvider;
