@@ -1,14 +1,10 @@
-export interface AppsObj {
-  title: string;
-  id?: string;
-}
-
+import React, { Dispatch, SetStateAction } from "react";
 export interface TextInProps {
-  name: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    name: string;
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
-
 export interface ApplicationsListProps {
-  title: string;
-  apps: AppsObj[];
+    title: string;
+    apps: string[];
+    setApps: Dispatch<SetStateAction<string[]>>;
 }

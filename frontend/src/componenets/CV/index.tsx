@@ -282,11 +282,12 @@ const Cv = ({ cv ,isEditableTemplate}: CvProps) => {
             .then((res) => {
                 console.log(userCvs);
                 console.log(res);
+                cv.cvId=res?.data?.cvId;
                 setUserCvs((prevUserCvs:any) => ({
                     ...prevUserCvs,
                     data: [
                         ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data : []), // Ensure data is an array
-                        res.data// hereeeeeeeeeeee
+                        cv// hereeeeeeeeeeee
                     ]
                 }));
                 setShowSuccess(true); // Show success alert

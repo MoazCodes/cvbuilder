@@ -112,10 +112,14 @@ const Cv2: React.FC<CvProps> = ({ cv ,isEditableTemplate}) => {
             .then((res) => {
                 
                 console.log(res);
-                setUserCvs({
-                    ...userCvs, 
-                    data: [...(userCvs.data), cv] 
-                });
+                cv.cvId=res?.data?.cvId;
+                setUserCvs((prevUserCvs:any) => ({
+                    ...prevUserCvs,
+                    data: [
+                        ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data : []), // Ensure data is an array
+                        cv// hereeeeeeeeeeee
+                    ]
+                }));
             })
             .catch((error) => {
                 setGetCvsErrors(error.response.data.error);
