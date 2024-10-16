@@ -1,11 +1,13 @@
 import { CgAddR } from "react-icons/cg";
-import { ApplicationsListProps } from "../../Interfaces/IApplications";
+import { ApplicationsListProps, AppsObj } from "../../Interfaces/IApplications";
 import ApplicationsCard from "./ApplicationsCard";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import TextIn from "../inputs/TextIn";
 import { faker } from "@faker-js/faker";
 import { ApplicationsContextType } from "../../Interfaces/ApplicationsContextType";
 import { ApplicationsContext } from "../../Context/ApplicationsContext";
+import { ItemTypes } from "../../Interfaces/dndTypes";
+import { useDrop } from "react-dnd";
 
 export default function ApplicationsList({
   apps,
@@ -14,19 +16,33 @@ export default function ApplicationsList({
   const appsContext: ApplicationsContextType | null =
     useContext(ApplicationsContext);
   const [isAddBtn, setIsAddBtn] = useState<boolean>(false);
+  const ref = useRef(null);
+  const [, drop] = useDrop({
+    accept: ItemTypes.APPLICATION,
+    drop: (app: AppsObj) => {
+      if (app && app?.id) {
+        appsContext?.changeAppCategory(app.id, title);
+      }
+    },
+  });
+
+  drop(ref);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && (e.target as HTMLInputElement).value) {
       appsContext?.setAllApps((prev) => {
-        const allApps = [
-          ...prev,
-          {
-            category: title,
-            id: faker.string.uuid(),
-            title: (e.target as HTMLInputElement).value,
-          },
-        ];
-        return allApps;
+        if (prev) {
+          const allApps = [
+            ...prev,
+            {
+              category: title,
+              id: faker.string.uuid(),
+              title: (e.target as HTMLInputElement).value,
+            },
+          ];
+          return allApps;
+        }
+        return prev;
       });
       setIsAddBtn(false);
     } else if (e.key === "Escape") {
@@ -35,7 +51,7 @@ export default function ApplicationsList({
   };
 
   return (
-    <div className="col-4">
+    <div className="col-4" ref={ref}>
       <div className="row justify-between">
         <h2 className="col">{title}</h2>
         <div className="col text-end">
