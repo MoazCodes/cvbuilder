@@ -1,6 +1,7 @@
 export interface AppsObj {
   title: string;
   id?: string;
+  category?:string
 }
 
 export interface TextInProps {
@@ -10,5 +11,6 @@ export interface TextInProps {
 
 export interface ApplicationsListProps {
   title: string;
-  apps: AppsObj[];
+  apps: AppsObj[] | undefined;
 }
+

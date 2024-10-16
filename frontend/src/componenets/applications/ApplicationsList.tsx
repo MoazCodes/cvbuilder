@@ -24,8 +24,8 @@ export default function ApplicationsList({
         </div>
       </div>
       <ul className="list-group">
-        {isAddBtn ? <TextIn name="apps2add" onChange={function () {}} /> : null}
-        {apps.map((app) => (
+        {isAddBtn ? <TextIn name="apps2add" onChange={function(){}} /> : null}
+        {apps?.map((app) => (
           <ApplicationsCard key={app.id} title={app.title} />
         ))}
       </ul>

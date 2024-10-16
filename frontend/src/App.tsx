@@ -22,6 +22,7 @@ import MyCvs from "./Pages/MyCvs";
 import ProtectedRoute from "./componenets/ProtectedRoute/ProtectedRoute";
 import UserProvider from "./Context/UserContext";
 import Cv2 from "./componenets/Cv2";
+import ApplicationProvider from "./Context/ApplicationsContext";
 
 function App() {
     useEffect(() => {
@@ -73,9 +74,11 @@ function App() {
                     <Route
                         path="/applications"
                         element={
-                            <ProtectedRoute>
+                            // <ProtectedRoute>
+                            <ApplicationProvider>
                                 <Applications />
-                            </ProtectedRoute>
+                            </ApplicationProvider>
+                            // </ProtectedRoute>
                         }
                     />
                     <Route
