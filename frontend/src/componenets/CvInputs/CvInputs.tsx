@@ -12,7 +12,7 @@ import axios from "axios";
 import Cv2 from "../Cv2";
 import { useLocation, useParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
-import Cv3 from "../../Cv3";
+import Cv3 from "../Cv3";
 import { required } from "joi";
 import { motion } from "framer-motion"
 
@@ -484,14 +484,17 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                     >
                                         Objective
                                     </label>
-                                    <textarea
+                                    <motion.textarea 
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
                                         style={{ minHeight: "150px" }}
                                         className="objective w-100 mt-3 form-control"
                                         id="objective"
                                         name="objective"
                                         onChange={handleInput}
                                         value={formData.objective}
-                                    ></textarea>
+                                    ></motion.textarea>
                                     <StepperLevel
                                         currentLevel={goSteps}
                                         setGoSteps={setGoSteps}
@@ -502,7 +505,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                             {goSteps === 2 && (
                                 <div className="container-fluid">
                                     <div className="row h-100">
-                                        <div className="col-md-6">
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="school"
@@ -520,8 +527,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.school}
                                                 />
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
+                                        </motion.div>
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="degree"
@@ -539,8 +550,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.degree}
                                                 />
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
+                                        </motion.div>
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolDepartment"
@@ -558,8 +573,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.schoolDepartment}
                                                 />
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
+                                        </motion.div>
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolCity"
@@ -577,8 +596,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.schoolCity}
                                                 />
                                             </div>
-                                        </div>
-                                        <div className="col-md-6">
+                                        </motion.div>
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolCountry"
@@ -596,9 +619,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.schoolCountry}
                                                 />
                                             </div>
-                                        </div>
+                                        </motion.div>
 
-                                        <div className="col-md-3">
+                                        <motion.div 
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-3">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="startSchoolDate"
@@ -616,9 +643,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.startSchoolDate}
                                                 />
                                             </div>
-                                        </div>
+                                        </motion.div>
 
-                                        <div className="col-md-3">
+                                        <motion.div 
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-3">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="endSchoolDate"
@@ -635,7 +666,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={formData.endSchoolDate}
                                                 />
                                             </div>
-                                        </div>
+                                        </motion.div>
 
                                         <StepperLevel
                                             currentLevel={goSteps}
@@ -647,7 +678,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                             {goSteps === 3 && (
                                 <div className="container-fluid  py-3 min-vh-70 ">
                                     <div className="row h-100 g-4">
-                                        <div className="col-md-6">
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <input
                                                 type="text"
                                                 className="form-control mt-3"
@@ -656,15 +691,19 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 value={skill}
                                                 onChange={handleSkill}
                                             />
-                                        </div>
-                                        <div className="col-md-6">
+                                        </motion.div>
+                                        <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                        className="col-md-6">
                                             <div
                                                 className="mt-3 btn btn-success w-100"
                                                 onClick={() => addSkill(skill)}
                                             >
                                                 Add Skill
                                             </div>
-                                        </div>
+                                        </motion.div>
                                         <div className="col-12 d-flex flex-wrap ">
                                             {formData.skills.map(
                                                 (skill, index) => (
@@ -692,7 +731,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                     <div className="row h-100">
                                         {projectAddition === true ? (
                                             <>
-                                                <div className="col-md-6">
+                                                <motion.div
+                                                initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                className="col-md-6">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -710,8 +753,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                             }
                                                         />
                                                     </div>
-                                                </div>
-                                                <div className="col-md-6">
+                                                </motion.div>
+                                                <motion.div
+                                                initial={{ opacity: 0, scale: 0.5 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ duration: 0.5 }}
+                                                className="col-md-6">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -728,9 +775,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                             }
                                                         />
                                                     </div>
-                                                </div>
+                                                </motion.div>
 
-                                                <div className="col-12">
+                                                <motion.div
+                                                initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                className="col-12">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -751,7 +802,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                             }
                                                         />
                                                     </div>
-                                                </div>
+                                                </motion.div>
                                                 <div className="col-12 d-flex align-items-center justify-content-end my-3 ">
                                                     <div className="">
                                                         <button
@@ -834,7 +885,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                         <div className="row h-100">
                                             {workAddition === true ? (
                                                 <>
-                                                    <div className="col-md-6">
+                                                    <motion.div
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                    className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -852,8 +907,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                                 }
                                                             />
                                                         </div>
-                                                    </div>
-                                                    <div className="col-md-6">
+                                                    </motion.div>
+                                                    <motion.div
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                    className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -871,8 +930,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                                 }
                                                             />
                                                         </div>
-                                                    </div>
-                                                    <div className="col-md-6">
+                                                    </motion.div>
+                                                    <motion.div
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                    className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -889,9 +952,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                                 }
                                                             />
                                                         </div>
-                                                    </div>
+                                                    </motion.div>
 
-                                                    <div className="col-md-6">
+                                                    <motion.div
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                    className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -908,9 +975,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                                 }
                                                             />
                                                         </div>
-                                                    </div>
+                                                    </motion.div>
 
-                                                    <div className="col-12">
+                                                    <motion.div
+                                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                                    className="col-12">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -927,7 +998,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                                 }
                                                             />
                                                         </div>
-                                                    </div>
+                                                    </motion.div>
                                                     <div className="col-md-12  d-flex align-items-center justify-content-end mt-3">
                                                         <div className="">
                                                             <button
@@ -1020,7 +1091,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                 <>
                                     <div className="container-fluid  py-3 min-vh-70 ">
                                         <div className="row h-100 g-4">
-                                            <div className="col-md-6">
+                                            <motion.div
+                                            initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                            className="col-md-6">
                                                 <input
                                                     type="text"
                                                     className="form-control mt-3"
@@ -1029,8 +1104,12 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     value={activity}
                                                     onChange={handleActivity}
                                                 />
-                                            </div>
-                                            <div className="col-md-6">
+                                            </motion.div>
+                                            <motion.div
+                                            initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                            className="col-md-6">
                                                 <div
                                                     className="mt-3 btn btn-success w-100"
                                                     onClick={() =>
@@ -1039,7 +1118,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 >
                                                     Add Activity
                                                 </div>
-                                            </div>
+                                            </motion.div>
                                             <div className="col-12 d-flex flex-wrap ">
                                                 {formData.extraCurricularActivities.map(
                                                     (skill, index) => (

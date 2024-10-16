@@ -1,11 +1,13 @@
 import { AppsObj } from "../../Interfaces/IApplications";
-import { MdDeleteForever } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
+// import { MdDeleteForever } from "react-icons/md";
+// import { FaRegEdit } from "react-icons/fa";
 import { ApplicationsContextType } from "../../Interfaces/ApplicationsContextType";
 import { useContext, useState } from "react";
 import { ApplicationsContext } from "../../Context/ApplicationsContext";
 import styles from "../inputs/TextIn.module.css";
 import { faker } from "@faker-js/faker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function ApplicationsCard({ id, ...props }: AppsObj) {
   const appsContext = useContext<ApplicationsContextType | null>(
@@ -38,8 +40,8 @@ export default function ApplicationsCard({ id, ...props }: AppsObj) {
     }
   };
   return (
-    <li className="my-1 row justify-content-between w-full bg-white text-black p-2 rounded-3 align-items-center">
-      <div className="col-7">
+    <li className="  border list-unstyled p-4 d-flex justify-content-between text-break">
+      <div className="w-75">
         {editField ? (
           <input
             type="text"
@@ -52,18 +54,20 @@ export default function ApplicationsCard({ id, ...props }: AppsObj) {
           title
         )}
       </div>
-      <div className="col-5 row gap-2">
+      <div className="d-flex w-25 justify-content-around align-items-center">
         <button
-          className="btn btn-danger col"
+          className="btn btn-danger  w-fitContent "
           onClick={(e) => handleDelete(id)}
+          style={{maxHeight:"38px"}}
         >
-          <MdDeleteForever aria-label="Delete" />
+          <FontAwesomeIcon icon={faTrash}/>
         </button>
         <button
-          className="btn bg-warning col"
+          className="btn bg-warning  w-fitContent"
           onClick={() => setEditField(true)}
+          style={{maxHeight:"38px"}}
         >
-          <FaRegEdit aria-label="Edit" />
+          <FontAwesomeIcon icon={faEdit} className="text-white"/>
         </button>
       </div>
     </li>

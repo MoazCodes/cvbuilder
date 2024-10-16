@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
-import { CvModel } from '../Interfaces/CvInterfaces';
-import { UserContext } from '../Context/UserContext';
+import { CvModel } from '../../Interfaces/CvInterfaces';
+import { UserContext } from '../../Context/UserContext';
 import { Link, useLocation } from 'react-router-dom';
 import './style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -312,14 +312,21 @@ export default function Cv3({ cv, isEditableTemplate }: CvProps) {
             
     };
 
-    const editCv = () => {
+    const editCv = ()=>{
         axios
-            .put(`http://127.0.0.1:8000/editcv/`, cv)
+            .put(`http://127.0.0.1:8000/editcv/`,cv)
             .then((res) => {
                 console.log(res)
+                setUserCvs((prevUserCvs:any) => ({
+                    ...prevUserCvs,
+                    data: [
+                        ...(Array.isArray(prevUserCvs.data) ? prevUserCvs.data.filter((allcv: CvModel) => cv.cvId !== allcv.cvId) : []),
+                        cv// hereeeeeeeeeeee
+                    ]
+                }));
             })
             .catch((error) => {
-
+                
                 console.log(error)
             });
     }

@@ -22,7 +22,7 @@ export default function Applications() {
         Applications
       </h1>
       <div className="container py-5">
-        <div className="row flex-nowrap gap-3">
+        <div className="row g-3">
           <ApplicationsList
             title="Favorites"
             apps={appsContext?.allApps.filter(
