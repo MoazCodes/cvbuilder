@@ -1020,7 +1020,11 @@ const CvInputs = ({isEditing}:CvInputsProps) => {
                             className="col-md-3 bg-light position-absolute end-0 text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
-                            {templateId=="1"?(<Cv cv={formData} isEditableTemplate={false}/>) : templateId=="2" ? (<Cv2 cv={formData} isEditableTemplate={false}/> ):<></>}
+                            {templateId=="1"?
+                            (<Cv cv={formData} isEditableTemplate={false}/>) 
+                            : templateId=="2"?
+                            (<Cv2 cv={formData} isEditableTemplate={false}/> )
+                            :<></>}
                             
                         </div>
                     </div>
