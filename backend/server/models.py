@@ -1,52 +1,52 @@
 from django.db import models
 
 class User(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=255)  
+    password = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
 class Skill(models.Model):
-    skill_name = models.CharField(max_length=255)
+    skill_name = models.CharField(max_length=255, null=True, blank=True)
 
 class Project(models.Model):
-    project_name = models.CharField(max_length=255)
-    project_date = models.CharField(max_length=255)  # Changed to CharField
-    project_details = models.TextField()
+    project_name = models.CharField(max_length=255, null=True, blank=True)
+    project_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
+    project_details = models.TextField(null=True, blank=True)
 
 class Experience(models.Model):
-    job_title = models.CharField(max_length=255)
-    company = models.CharField(max_length=255)
-    start_job_date = models.CharField(max_length=255)  # Changed to CharField
-    end_job_date = models.CharField(max_length=255)    # Changed to CharField
-    job_description = models.TextField()
+    job_title = models.CharField(max_length=255, null=True, blank=True)
+    company = models.CharField(max_length=255, null=True, blank=True)
+    start_job_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
+    end_job_date = models.CharField(max_length=255, null=True, blank=True)    # Allows null values
+    job_description = models.TextField(null=True, blank=True)
 
 class ExtracurricularActivity(models.Model):
-    activity_name = models.CharField(max_length=255)
+    activity_name = models.CharField(max_length=255, null=True, blank=True)
 
 class CV(models.Model):
     cv_name = models.CharField(max_length=255)
-    template= models.CharField(max_length=255)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    job_title = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
-    email = models.EmailField()
-    objective = models.TextField()
-    degree = models.CharField(max_length=255)
-    school_name = models.CharField(max_length=255)
-    school_department = models.CharField(max_length=255)
-    school_city = models.CharField(max_length=255)
-    school_country = models.CharField(max_length=255)
-    start_school_date = models.CharField(max_length=255)  # Changed to CharField
-    end_school_date = models.CharField(max_length=255)    # Changed to CharField
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    template = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Foreign key cannot accept null
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    job_title = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    objective = models.TextField(null=True, blank=True)
+    degree = models.CharField(max_length=255, null=True, blank=True)
+    school_name = models.CharField(max_length=255, null=True, blank=True)
+    school_department = models.CharField(max_length=255, null=True, blank=True)
+    school_city = models.CharField(max_length=255, null=True, blank=True)
+    school_country = models.CharField(max_length=255, null=True, blank=True)
+    start_school_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
+    end_school_date = models.CharField(max_length=255, null=True, blank=True)    # Allows null values
+    created_at = models.DateTimeField(auto_now_add=True)  # This field auto-generates values
+    updated_at = models.DateTimeField(auto_now=True)      # This field auto-updates
 
     # Many-to-many relationships
     skills = models.ManyToManyField(Skill, related_name='cvs', blank=True)
