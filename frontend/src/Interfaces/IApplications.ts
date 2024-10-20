@@ -12,5 +12,5 @@ export interface TextInProps {
 }
 export interface ApplicationsListProps {
   title: string;
-  apps: AppsObj[] | undefined;
+  apps: AppsObj[] | [];
 }
