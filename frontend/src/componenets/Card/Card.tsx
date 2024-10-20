@@ -32,15 +32,16 @@ interface CardProps {
     content: string;
     color: string;
     svg: string;
+    duration:number;
 }
 
-const Card: React.FC<CardProps> = ({ title, content, color, svg }) => {
+const Card: React.FC<CardProps> = ({ title, content, color, svg,duration }) => {
     return (
         <>
             <div className="col-md-1 d-sm-none d-md-block"></div>
             <div className="col-md-4 col-sm-12">
                 <div
-                    data-wow-duration="1.2s"
+                    data-wow-duration={`${0.5*(duration+1.5)}s`}
                     className="customCard py-5 px-4 bg-transparent text-white container-fluid border mb-2 position-relative wow animate__fadeInUp"
                     style={{
                         borderColor: `var(--${color}-500) !important`,

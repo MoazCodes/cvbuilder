@@ -10,7 +10,7 @@ const Jobs = () => {
     useEffect(() => {
         const adjustJobsPerPage = () => {
             const rowHeight = 150;
-            const availableHeight = window.innerHeight - 300;
+            const availableHeight = window.innerHeight - 200;
             const rows = Math.floor(availableHeight / rowHeight);
             setJobsPerPage(rows);
         };
@@ -51,7 +51,7 @@ const Jobs = () => {
             <div className="h-80p"> </div>
             <section className="search-section py-4">
                 <div className="container">
-                    <div className="row justify-content-between">
+                    <div className="row justify-content-between g-3">
                         <div className="col-md-8 col-sm-12">
                             <input
                                 type="text"
@@ -62,7 +62,10 @@ const Jobs = () => {
                             />
                         </div>
                         <div className="col-md-2 col-sm-12">
-                            <button className="btn btn-primary w-100">
+                            <button
+                                className="btn text-white w-100"
+                                style={{ background: "var(--main-color)" }}
+                            >
                                 <i className="fas fa-search"></i> Search
                             </button>
                         </div>

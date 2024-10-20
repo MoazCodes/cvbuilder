@@ -157,3 +157,7 @@ body {
 .form-control::placeholder {
     color: #b3b1b1 !important;
 }
+
+.min-vh-50 {
+    min-height: 50vh;
+}

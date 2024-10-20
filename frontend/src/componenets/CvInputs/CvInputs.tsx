@@ -14,16 +14,17 @@ import { useLocation, useParams } from "react-router-dom";
 
 import Cv3 from "../Cv3";
 import { required } from "joi";
-import { motion } from "framer-motion"
 
 type CvInputsProps = {
     isEditing: boolean;
-}
-
+};
 
 const CvInputs = ({ isEditing }: CvInputsProps) => {
-
-    const { templateId, userId, cvId } = useParams<{ templateId?: string; userId?: string; cvId?: string }>();
+    const { templateId, userId, cvId } = useParams<{
+        templateId?: string;
+        userId?: string;
+        cvId?: string;
+    }>();
     const location = useLocation();
 
     const [goSteps, setGoSteps] = useState(0);
@@ -34,7 +35,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
     const [project, setProject] = useState({
         projectName: "",
         projectDate: "",
-        projectDetails: "",
+        projectDetails: ""
     });
 
     const [experience, setExperience] = useState({
@@ -42,7 +43,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
         startJobDate: "",
         endJobDate: "",
         jobDescription: "",
-        company: "",
+        company: ""
     });
 
     const [formData, setFormData] = useState<CvModel>({
@@ -70,7 +71,6 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
         extraCurricularActivities: [] as string[]
     });
 
-
     const renderTemplate = () => {
         switch (templateId) {
             case "1":
@@ -89,21 +89,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
             axios
                 .get(`http://127.0.0.1:8000/cv/${cvId}`)
                 .then((res) => {
-
-                    setFormData(res.data.data)
-
+                    setFormData(res.data.data);
                 })
                 .catch((error) => {
-
-                    console.log(error)
+                    console.log(error);
                 });
         }
-
-    }, [cvId])
-
-
-
-
+    }, [cvId]);
 
     let handleSkill = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSkill(e.target.value);
@@ -227,7 +219,22 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
         });
     };
 
-    useEffect(() => { }, [formData]);
+    useEffect(() => {}, [formData]);
+
+    const steps = [
+        "Personal Details",
+        "Objective",
+        "Education",
+        "Skills",
+        "Projects",
+        "Work experience",
+        "ExtraCurricular Activities",
+    ];
+
+    const getStepBackgroundColor = (currentStep: number, stepIndex: number) => {
+        return currentStep >= stepIndex ? "var(--main-color)" : "#aaa";
+    };
+
     return (
         <>
             <div className="pt-5 mt-5  container  vh-100">
@@ -242,57 +249,18 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                         style: "margin: 4px; border: 2px solid white;", // Additional styles
                     }}
                 >
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 0 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Personal Details"
-                    />
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 1 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Objective"
-                    />
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 2 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Education"
-                    />
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 3 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Skills"
-                    />
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 4 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Projects"
-                    />
-
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 5 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="Work experience"
-                    />
-
-                    <Step
-                        style={{
-                            backgroundColor:
-                                goSteps >= 6 ? "var(--main-color)" : "#aaa",
-                        }}
-                        label="ExtraCurricular Activities"
-                    />
+                    {steps.map((label, index) => (
+                        <Step
+                            key={index}
+                            style={{
+                                backgroundColor: getStepBackgroundColor(
+                                    goSteps,
+                                    index
+                                ),
+                            }}
+                            label={label}
+                        />
+                    ))}
                 </Stepper>
                 <div className="container mt-5">
                     <div className="row position-relative">
@@ -301,9 +269,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                 <div className="container-fluid">
                                     <div className="row">
                                         <div className="col-md-12">
-                                            <div 
-                                           
-                                            className="mb-3">
+                                            <div className="mb-3">
                                                 <label
                                                     htmlFor="cvName"
                                                     className="form-label"
@@ -319,14 +285,16 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     name="cvName"
                                                     value={formData.cvName}
                                                     required
-                                                    readOnly={location.pathname.includes("edit")}
-                                                    disabled={location.pathname.includes("edit")}
+                                                    readOnly={location.pathname.includes(
+                                                        "edit"
+                                                    )}
+                                                    disabled={location.pathname.includes(
+                                                        "edit"
+                                                    )}
                                                 />
                                             </div>
                                         </div>
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="firstName"
@@ -346,9 +314,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                             </div>
                                         </div>
 
-                                        <div 
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="lastName"
@@ -368,8 +334,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-12" 
-                                            >
+                                        <div className="col-md-12">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="job"
@@ -389,8 +354,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-6" 
-                                       >
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="city"
@@ -410,9 +374,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-6"
-                                        
-                                        >
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="country"
@@ -432,9 +394,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                             </div>
                                         </div>
 
-                                        <div className="col-md-6"
-                                        
-                                        >
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="email"
@@ -471,7 +431,6 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                         Objective
                                     </label>
                                     <textarea
-                                    
                                         style={{ minHeight: "150px" }}
                                         className="objective w-100 mt-3 form-control"
                                         id="objective"
@@ -489,9 +448,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                             {goSteps === 2 && (
                                 <div className="container-fluid">
                                     <div className="row h-100">
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="school"
@@ -510,9 +467,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 />
                                             </div>
                                         </div>
-                                        <div
-                                       
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="degree"
@@ -531,9 +486,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 />
                                             </div>
                                         </div>
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolDepartment"
@@ -548,13 +501,13 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     placeholder="AI"
                                                     name="schoolDepartment"
                                                     onChange={handleInput}
-                                                    value={formData.schoolDepartment}
+                                                    value={
+                                                        formData.schoolDepartment
+                                                    }
                                                 />
                                             </div>
                                         </div>
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolCity"
@@ -573,9 +526,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 />
                                             </div>
                                         </div>
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="schoolCountry"
@@ -590,14 +541,14 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     placeholder="Egypt"
                                                     name="schoolCountry"
                                                     onChange={handleInput}
-                                                    value={formData.schoolCountry}
+                                                    value={
+                                                        formData.schoolCountry
+                                                    }
                                                 />
                                             </div>
                                         </div>
 
-                                        <div 
-                                        
-                                        className="col-md-3">
+                                        <div className="col-md-3">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="startSchoolDate"
@@ -612,14 +563,14 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     placeholder="September"
                                                     name="startSchoolDate"
                                                     onChange={handleInput}
-                                                    value={formData.startSchoolDate}
+                                                    value={
+                                                        formData.startSchoolDate
+                                                    }
                                                 />
                                             </div>
                                         </div>
 
-                                        <div 
-                                        
-                                        className="col-md-3">
+                                        <div className="col-md-3">
                                             <div className="mb-3">
                                                 <label
                                                     htmlFor="endSchoolDate"
@@ -633,7 +584,9 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     id="endSchoolDate"
                                                     name="endSchoolDate"
                                                     onChange={handleInput}
-                                                    value={formData.endSchoolDate}
+                                                    value={
+                                                        formData.endSchoolDate
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -648,9 +601,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                             {goSteps === 3 && (
                                 <div className="container-fluid  py-3 min-vh-70 ">
                                     <div className="row h-100 g-4">
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <input
                                                 type="text"
                                                 className="form-control mt-3"
@@ -660,9 +611,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 onChange={handleSkill}
                                             />
                                         </div>
-                                        <div
-                                        
-                                        className="col-md-6">
+                                        <div className="col-md-6">
                                             <div
                                                 className="mt-3 btn btn-success w-100"
                                                 onClick={() => addSkill(skill)}
@@ -697,9 +646,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                     <div className="row h-100">
                                         {projectAddition === true ? (
                                             <>
-                                                <div
-                                                
-                                                className="col-md-6">
+                                                <div className="col-md-6">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -718,9 +665,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div
-                                                
-                                                className="col-md-6">
+                                                <div className="col-md-6">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -739,9 +684,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     </div>
                                                 </div>
 
-                                                <div
-                                               
-                                                className="col-12">
+                                                <div className="col-12">
                                                     <div className="mb-3">
                                                         <label
                                                             htmlFor=""
@@ -845,9 +788,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                         <div className="row h-100">
                                             {workAddition === true ? (
                                                 <>
-                                                    <div
-                                                   
-                                                    className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -866,9 +807,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div
-                                                    
-                                                    className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -887,9 +826,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div
-                                                    
-                                                    className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -908,9 +845,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                         </div>
                                                     </div>
 
-                                                    <div
-                                                   
-                                                    className="col-md-6">
+                                                    <div className="col-md-6">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -929,9 +864,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                         </div>
                                                     </div>
 
-                                                    <div
-                                                   
-                                                    className="col-12">
+                                                    <div className="col-12">
                                                         <div className="mb-3">
                                                             <label
                                                                 htmlFor=""
@@ -966,7 +899,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                 </>
                                             ) : (
                                                 formData.experiences.length >
-                                                0 && (
+                                                    0 && (
                                                     <>
                                                         {formData.experiences.map(
                                                             (
@@ -1041,9 +974,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                 <>
                                     <div className="container-fluid  py-3 min-vh-70 ">
                                         <div className="row h-100 g-4">
-                                            <div
-                                            
-                                            className="col-md-6">
+                                            <div className="col-md-6">
                                                 <input
                                                     type="text"
                                                     className="form-control mt-3"
@@ -1053,9 +984,7 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                                                     onChange={handleActivity}
                                                 />
                                             </div>
-                                            <div
-                                           
-                                            className="col-md-6">
+                                            <div className="col-md-6">
                                                 <div
                                                     className="mt-3 btn btn-success w-100"
                                                     onClick={() =>
@@ -1089,12 +1018,11 @@ const CvInputs = ({ isEditing }: CvInputsProps) => {
                             )}
                         </div>
                         <div className="col-md-1"></div>
-                        <div  
+                        <div
                             className="col-md-3 col-sm-12 bg-light position-relative text-dark p-0"
                             style={{ minHeight: "428px" }}
                         >
                             {renderTemplate()}
-
                         </div>
                     </div>
                 </div>

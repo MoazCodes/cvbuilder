@@ -27,6 +27,7 @@
     color: white !important;
     border-color: hsl(270, 60%, 52%) !important;
     font-weight: bold !important;
+    transition: all 0.2s;
 }
 
 .newCvBtn:hover {
@@ -35,6 +36,7 @@
         #660ac2 15.89%,
         #850ac2 89.75%
     ) !important;
+    scale: 1.1;
 }
 
 .cvImage {

@@ -9,13 +9,15 @@ import DataForHowToUseSection from "../../staticData/DataForHowToUseSection.json
 import DataForFeaturesSection from "../../staticData/DataForFeaturesSection.json";
 import { Link } from "react-router-dom";
 import Templates from "../Templates/Templates";
+import TypedComponent from "../../componenets/Typed/Typed";
+
 const Home = () => {
     return (
         <>
-            <section id="Hero" className="hero vh-100 text-white ">
+            <section id="Hero" className="hero vh-100 text-white" >
                 <div className="container w-80">
                     <div className="row">
-                        <div className="col-md-8 col-sm-12 d-flex flex-column justify-content-center vh-100 ">
+                        <div className="col-md-8 col-sm-12 d-flex flex-column justify-content-center vh-100  wow animate__backInLeft" data-wow-duration="0.7s">
                             <div className="content">
                                 <h1
                                     style={{
@@ -35,7 +37,7 @@ const Home = () => {
                                     Create your very own professional Resume and
                                     download it within 15 minutes.
                                 </h5>
-
+                                
                                 <Link
                                     className="btn px-5 py-2 newCvBtn"
                                     to={"/templates"}
@@ -47,8 +49,8 @@ const Home = () => {
 
                         <div className="col-md-4 d-flex flex-column justify-content-center position-relative ">
                             <div
-                                className="cvImage wow animate__slideInUp"
-                                data-wow-duration="0.4s"
+                                className="cvImage wow animate__backInUp"
+                                data-wow-duration="0.7s"
                             >
                                 <img
                                     src="/assets/cv.jpg"
@@ -88,6 +90,7 @@ const Home = () => {
                                     color={"blue"}
                                     svg={cardData.svg}
                                     key={i}
+                                    duration={i}
                                 />
                             </>
                         ))}
@@ -117,6 +120,7 @@ const Home = () => {
                                     color={"green"}
                                     svg={cardData.svg}
                                     key={i}
+                                    duration={0.5*i}
                                 />
                             </>
                         ))}

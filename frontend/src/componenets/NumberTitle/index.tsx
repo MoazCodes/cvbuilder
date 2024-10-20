@@ -1,4 +1,5 @@
 import React from "react";
+import TypedComponent from "../Typed/Typed";
 interface NumberTitleProps {
     number: number;
     color: string;
@@ -40,7 +41,7 @@ const NumberTitle: React.FC<NumberTitleProps> = ({
                     >
                         {title1}
                     </h1>
-                    <h1 className="text-center fw-bold  ">{title2}</h1>
+                    <h1 className="text-center fw-bold  "><TypedComponent string={title2}/></h1>
                 </div>
 
                 <hr
