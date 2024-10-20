@@ -14,14 +14,14 @@ class Skill(models.Model):
 
 class Project(models.Model):
     project_name = models.CharField(max_length=255)
-    project_date = models.CharField(max_length=255)  # Changed to CharField
+    project_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
     project_details = models.TextField()
 
 class Experience(models.Model):
     job_title = models.CharField(max_length=255)
     company = models.CharField(max_length=255)
-    start_job_date = models.CharField(max_length=255)  # Changed to CharField
-    end_job_date = models.CharField(max_length=255)    # Changed to CharField
+    start_job_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
+    end_job_date = models.CharField(max_length=255, null=True, blank=True)    # Allows null values
     job_description = models.TextField()
 
 class ExtracurricularActivity(models.Model):
@@ -29,7 +29,7 @@ class ExtracurricularActivity(models.Model):
 
 class CV(models.Model):
     cv_name = models.CharField(max_length=255)
-    template= models.CharField(max_length=255)
+    template = models.CharField(max_length=255)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -43,8 +43,8 @@ class CV(models.Model):
     school_department = models.CharField(max_length=255)
     school_city = models.CharField(max_length=255)
     school_country = models.CharField(max_length=255)
-    start_school_date = models.CharField(max_length=255)  # Changed to CharField
-    end_school_date = models.CharField(max_length=255)    # Changed to CharField
+    start_school_date = models.CharField(max_length=255, null=True, blank=True)  # Allows null values
+    end_school_date = models.CharField(max_length=255, null=True, blank=True)    # Allows null values
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
